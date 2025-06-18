@@ -1,14 +1,13 @@
 # Explicit build settings for Netlify
-# هذا الملف يعطي تعليمات واضحة لـ Netlify
 [build]
-  # هذا يخبر Netlify أين يجد ملفات الموقع الرئيسية (index.html).
-  # النقطة "." تعني المجلد الرئيسي للمشروع.
+  # This tells Netlify where to find the site's files to publish.
+  # "." means the root directory.
   publish = "."
-  
-  # هذا يخبر Netlify بشكل صريح أين يجد مجلد الوظائف السحابية.
+
+  # This explicitly tells Netlify where the functions are.
   functions = "functions/"
 
-# هذه قاعدة احتياطية لضمان عمل الموقع بشكل صحيح
+# This is a fallback rule to ensure the site works correctly
 [[redirects]]
   from = "/*"
   to = "/index.html"
