@@ -1,2 +1,15 @@
-[functions]
-  directory = "functions/"
+# Explicit build settings for Netlify
+# هذا الملف يعطي تعليمات واضحة لـ Netlify
+[build]
+  # هذا يخبر Netlify أين يجد ملفات الموقع الرئيسية (index.html).
+  # النقطة "." تعني المجلد الرئيسي للمشروع.
+  publish = "."
+  
+  # هذا يخبر Netlify بشكل صريح أين يجد مجلد الوظائف السحابية.
+  functions = "functions/"
+
+# هذه قاعدة احتياطية لضمان عمل الموقع بشكل صحيح
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
