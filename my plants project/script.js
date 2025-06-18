@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         geminiModal.classList.remove('hidden');
 
         try {
-            const response = await fetch('/.netlify/functions/fetch-gemini', {
+            const response = await fetch('/api/fetch-gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt })
