@@ -14,9 +14,8 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: "Prompt is required." }) };
         }
 
-        // --- التغيير الوحيد والمهم هنا ---
-        // لقد قمنا بتغيير النموذج إلى gemini-pro لضمان التوافق
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+        // --- التغيير هنا لاستخدام نموذج أحدث يتوافق مع مفتاحك ---
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
         
         const payload = {
             contents: [{
@@ -32,7 +31,6 @@ exports.handler = async function(event, context) {
 
         if (!response.ok) {
             const errorText = await response.text();
-            // نعيد الخطأ من جوجل كما هو لنراه بوضوح
             throw new Error(`Google API Error: ${errorText}`);
         }
 
