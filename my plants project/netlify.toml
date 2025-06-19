@@ -1,10 +1,9 @@
-# Explicit build settings for Netlify
+# Correct build settings
 [build]
-  # This tells Netlify where to find the site's files to publish.
-  # "." means the root directory.
+  # This tells Netlify our site files are in the root directory
   publish = "."
 
-  # This explicitly tells Netlify where the functions are.
-  functions = "functions/"
-
-# This is a fallback rule to ensure the site works correctly
+# Correct functions settings in its own dedicated section
+[functions]
+  # This tells Netlify our functions are in the "functions" folder
+  directory = "functions/"
