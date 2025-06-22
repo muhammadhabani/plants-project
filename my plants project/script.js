@@ -27,18 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
         geminiTextContent.innerHTML = '';
 
         const titles = { info: "معلومات عامة", uses: "استخدامات تقليدية", names: "أسماء شعبية", scientific: "الاسم العلمي" };
+        
+        // --- *** UPDATED PROMPTS *** ---
+        // The prompts are now more detailed and direct the AI to not mention its role.
         const prompts = {
-            info: `بصفتك خبير نباتات متخصص في الغطاء النباتي للمملكة العربية السعودية، قدم وصفاً تعريفياً موجزاً لنبات '${plantName}'.`,
-            uses: `بصفتك باحث في التراث النباتي للمملكة، اذكر أبرز الاستخدامات التقليدية لنبات '${plantName}' في الثقافة السعودية.`,
-            names: `كمختص، ما هي الأسماء الشعبية الأخرى الشائعة لنبات '${plantName}' في مختلف مناطق المملكة؟`,
-            scientific: `بصفتك عالم نباتات، ما هو الاسم العلمي الدقيق لنبات '${plantName}'؟ واذكر أيضاً العائلة النباتية التي ينتمي إليها.`
+            info: `بصفتك خبير نباتات متخصص في الغطاء النباتي للمملكة العربية السعودية، قدم وصفاً تعريفياً موجزاً لنبات '${plantName}'. ركز على شكله المميز، وبيئته الطبيعية التي ينمو فيها داخل المملكة. ابدأ الإجابة مباشرة.`,
+            uses: `بصفتك باحث في التراث النباتي للمملكة، اذكر أبرز الاستخدامات التقليدية لنبات '${plantName}' في الثقافة السعودية، سواء كانت طبية أو غذائية. قدم الإجابة في نقاط واضحة. ابدأ الإجابة مباشرة دون تمهيد.`,
+            names: `كمختص في اللهجات والنباتات المحلية، ما هي الأسماء الشعبية الأخرى الشائعة لنبات '${plantName}' في مختلف مناطق المملكة؟ ابدأ الإجابة مباشرة.`,
+            scientific: `بصفتك عالم نباتات، ما هو الاسم العلمي الدقيق (Scientific Name) لنبات '${plantName}'؟ واذكر أيضاً اسم العائلة النباتية (Family) التي ينتمي إليها. أجب مباشرة.`
         };
         
         modalTitle.textContent = `${titles[type]} عن ${plantName}`;
         const prompt = prompts[type];
 
         try {
-            // This is the secure way: call our own serverless function
+            // This securely calls our serverless function
             const response = await fetch('/.netlify/functions/fetch-gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -46,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                // Try to parse the error message from our function
                 const errorData = await response.json();
                 throw new Error(errorData.error || `Server error: ${response.status}`);
             }
