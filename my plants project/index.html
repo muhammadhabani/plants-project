@@ -3,57 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النباتات في المملكة العربية السعودية - عرض تفاعلي</title>
+    <title>النباتات في المملكة العربية السعودية</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="slide-container">
-        <div id="slide-1" class="slide active">
-            <div class="sadu-pattern-bg absolute inset-0 z-0"></div>
-            <div class="relative z-10 flex flex-col items-center">
-                <h1 class="text-5xl md:text-6xl font-extrabold text-[#a0522d] mb-4 drop-shadow-lg">
-                    النباتات في المملكة العربية السعودية
-                </h1>
-                <p class="text-2xl md:text-3xl text-[#5a4a3c] mb-8">
-                    كنوز الطبيعة الخضراء: رحلة عبر التنوع البيولوجي
-                </p>
-            </div>
-        </div>
-        <div id="slide-2" class="slide">
-            <div class="absolute inset-0 bg-gradient-to-br from-[#c8e6c9] to-[#81c784] opacity-20 z-0 rounded-2xl"></div>
-            <div class="relative z-10 content-border max-w-4xl mx-auto bg-white/90 p-6 rounded-xl shadow-lg">
-                <h2 class="text-4xl font-bold text-[#2e7d32] mb-6 border-b-2 border-[#81c784] pb-3">
-                    مستكشف النباتات
-                </h2>
-                <div class="mb-6">
-                    <label for="plantNameInput" class="block text-xl font-semibold text-gray-700 mb-2">أدخل اسم النبات:</label>
-                    <input type="text" id="plantNameInput"
-                           class="w-full p-3 text-lg border-2 border-[#d2b48c] rounded-lg focus:outline-none focus:border-[#a0522d]"
-                           placeholder="مثال: سدر، شيح..." dir="rtl">
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mt-6">
-                    <button id="generalInfoBtn" class="nav-button bg-[#4a6b3a] hover:bg-[#2e7d32]">معلومات عامة</button>
-                    <button id="traditionalUsesBtn" class="nav-button bg-[#4a6b3a] hover:bg-[#2e7d32]">استخدامات تقليدية</button>
-                    <button id="otherNamesBtn" class="nav-button bg-[#4a6b3a] hover:bg-[#2e7d32]">أسماء شعبية</button>
-                    <button id="scientificNameBtn" class="nav-button bg-[#4a6b3a] hover:bg-[#2e7d32]">الاسم العلمي</button>
+<body class="flex justify-center items-center min-h-screen">
+    <div id="bg-1" class="page-background"></div>
+    <div id="bg-2" class="page-background" style="opacity: 0;"></div>
+    <div id="bg-3" class="page-background" style="opacity: 0;"></div>
+
+    <main class="flex justify-center items-center min-h-screen w-full">
+        <div class="w-full max-w-5xl h-[90vh] bg-transparent relative overflow-hidden">
+
+            <div id="slide-1" class="slide active">
+                <div class="bg-white/10 backdrop-blur-xl p-10 rounded-2xl shadow-lg border border-white/20">
+                    <h1 class="text-6xl md:text-8xl font-bold text-gray-800 drop-shadow-md">كنوز خضراء</h1>
+                    <button id="startBtn" class="mt-10 px-10 py-4 bg-[#6a4f3e] text-white rounded-lg font-semibold text-xl shadow-lg hover:bg-[#5a3f2e] transition-all transform hover:scale-105">ابدأ الرحلة</button>
                 </div>
             </div>
+
+            <div id="slide-2" class="slide">
+                <div class="w-full max-w-3xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-5xl font-bold text-gray-800 mb-8">مستكشف النباتات</h2>
+                    <div class="bg-gray-50/80 p-6 rounded-xl border border-gray-200 shadow-inner">
+                        <label for="plantNameInput" class="block text-lg font-semibold text-gray-700 mb-3 text-right">أدخل اسم النبات:</label>
+                        <input type="text" id="plantNameInput" class="w-full p-4 text-xl border-2 border-gray-300 rounded-lg" placeholder="مثال: سدر، شيح..." dir="rtl">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                            <button data-type="info" class="p-4 bg-[#6a4f3e] text-white rounded-lg font-semibold shadow-md hover:bg-[#5a3f2e] transform hover:-translate-y-1 transition-all">معلومات عامة</button>
+                            <button data-type="uses" class="p-4 bg-[#6a4f3e] text-white rounded-lg font-semibold shadow-md hover:bg-[#5a3f2e] transform hover:-translate-y-1 transition-all">استخدامات تقليدية</button>
+                            <button data-type="names" class="p-4 bg-[#6a4f3e] text-white rounded-lg font-semibold shadow-md hover:bg-[#5a3f2e] transform hover:-translate-y-1 transition-all">أسماء شعبية</button>
+                            <button data-type="scientific" class="p-4 bg-[#6a4f3e] text-white rounded-lg font-semibold shadow-md hover:bg-[#5a3f2e] transform hover:-translate-y-1 transition-all">الاسم العلمي</button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-8">
+                        <button id="backToStartBtn" class="px-8 py-2 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">العودة للبداية</button>
+                        <button id="mapBtn" class="px-8 py-3 bg-[#6a4f3e] text-white rounded-full font-semibold hover:bg-[#5a3f2e] transition-all">عرض الخريطة</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide-3" class="slide">
+                 <div class="w-full h-full flex flex-col justify-center items-center bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-4 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800">الخريطة التفاعلية</h2>
+                    <p class="text-md md:text-lg text-gray-600 mb-4">انقر على أي منطقة</p>
+                    <div id="map-container" class="flex-grow w-full flex items-center justify-center">
+                        </div>
+                    <button id="backToExplorerBtn" class="mt-4 px-8 py-2 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">العودة للمستكشف</button>
+                </div>
+            </div>
         </div>
-        <div class="nav-buttons">
-            <button id="prevBtn" class="nav-button">السابق</button>
-            <button id="nextBtn" class="nav-button">التالي</button>
-        </div>
-    </div>
-    <div id="geminiModal" class="modal hidden">
-        <div class="modal-content">
-            <span class="modal-close-btn" id="closeModalBtn">&times;</span>
-            <h3 id="modalTitle" class="text-3xl font-bold text-[#a0522d] mb-4 text-center"></h3>
-            <div id="geminiResponse" class="text-gray-800 text-lg leading-relaxed text-right">
+    </main>
+    <div id="geminiModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center p-4 z-50 hidden">
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl w-full max-w-2xl p-6 md:p-8 relative border border-white/20">
+            <button id="closeModalBtn" class="absolute top-4 left-4 text-3xl text-gray-500 hover:text-gray-800 transition-colors">&times;</button>
+            <h3 id="modalTitle" class="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 text-center"></h3>
+            <div id="geminiResponse" class="text-gray-700 text-lg leading-relaxed text-right min-h-[150px] max-h-[50vh] overflow-y-auto pr-2">
                 <div class="spinner hidden"></div>
-                <img id="plantImage" src="" alt="صورة النبات" class="hidden w-40 h-40 rounded-full mx-auto mb-4 object-cover border-4 border-[#b08d57]">
-                <div id="geminiTextContent"></div>
+                <p id="geminiTextContent"></p>
             </div>
         </div>
     </div>

@@ -1,9 +1,8 @@
-# Correct build settings
 [build]
-  # This tells Netlify our site files are in the root directory
   publish = "."
+  functions = "functions/"
 
-# Correct functions settings in its own dedicated section
-[functions]
-  # This tells Netlify our functions are in the "functions" folder
-  directory = "functions/"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
