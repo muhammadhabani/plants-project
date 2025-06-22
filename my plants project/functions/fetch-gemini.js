@@ -15,19 +15,19 @@ exports.handler = async function(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Google API Error: ${errorText}`);
         }
         const result = await response.json();
-
+        
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(result),
         };
     } catch (error) {
+        console.error("Function Error:", error);
         return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };

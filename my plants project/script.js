@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const slides = [document.getElementById('slide-1'), document.getElementById('slide-2'), document.getElementById('slide-3')];
-    const backgrounds = [document.getElementById('bg-1'), document.getElementById('bg-2'), document.getElementById('bg-3')];
+    // --- Elements ---
+    const slides = [document.getElementById('slide-1'), document.getElementById('slide-2')];
+    const backgrounds = [document.getElementById('bg-1'), document.getElementById('bg-2')];
     const startBtn = document.getElementById('startBtn');
-    const mapBtn = document.getElementById('mapBtn');
-    const backToStartBtn = document.getElementById('backToStartBtn');
-    const backToExplorerBtn = document.getElementById('backToExplorerBtn');
-    const mapContainer = document.getElementById('map-container');
+    const backBtn = document.getElementById('backBtn');
     const geminiModal = document.getElementById('geminiModal');
     const modalTitle = document.getElementById('modalTitle');
     const geminiTextContent = document.getElementById('geminiTextContent');
@@ -14,44 +12,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const plantNameInput = document.getElementById('plantNameInput');
     const explorerButtons = document.querySelectorAll('#slide-2 button[data-type]');
 
+    // --- Slide Navigation ---
     function showSlide(index) {
-        backgrounds.forEach((bg, i) => bg.style.opacity = (i === index) ? '1' : '0');
-        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        backgrounds.forEach((bg, i) => { bg.style.opacity = (i === index) ? '1' : '0'; });
+        slides.forEach((slide, i) => { slide.style.display = (i === index) ? 'flex' : 'none'; });
     }
-
     startBtn.addEventListener('click', () => showSlide(1));
-    mapBtn.addEventListener('click', () => showSlide(2));
-    backToExplorerBtn.addEventListener('click', () => showSlide(1)); 
-    backToStartBtn.addEventListener('click', () => showSlide(0));
-
+    backBtn.addEventListener('click', () => showSlide(0));
+    
+    // --- SECURE API Call Logic ---
     async function handleSearch(plantName, type) {
-        // Modal and spinner logic...
+        geminiModal.style.display = 'flex';
+        spinner.style.display = 'block';
+        geminiTextContent.innerHTML = '';
+
+        const titles = { info: "معلومات عامة", uses: "استخدامات تقليدية", names: "أسماء شعبية", scientific: "الاسم العلمي" };
+        const prompts = {
+            info: `بصفتك خبير نباتات متخصص في الغطاء النباتي للمملكة العربية السعودية، قدم وصفاً تعريفياً موجزاً لنبات '${plantName}'.`,
+            uses: `بصفتك باحث في التراث النباتي للمملكة، اذكر أبرز الاستخدامات التقليدية لنبات '${plantName}' في الثقافة السعودية.`,
+            names: `كمختص، ما هي الأسماء الشعبية الأخرى الشائعة لنبات '${plantName}' في مختلف مناطق المملكة؟`,
+            scientific: `بصفتك عالم نباتات، ما هو الاسم العلمي الدقيق لنبات '${plantName}'؟ واذكر أيضاً العائلة النباتية التي ينتمي إليها.`
+        };
+        
+        modalTitle.textContent = `${titles[type]} عن ${plantName}`;
+        const prompt = prompts[type];
+
+        try {
+            // This is the secure way: call our own serverless function
+            const response = await fetch('/.netlify/functions/fetch-gemini', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+
+            if (!response.ok) {
+                // Try to parse the error message from our function
+                const errorData = await response.json();
+                throw new Error(errorData.error || `Server error: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            if (!result.candidates || result.candidates.length === 0) {
+                throw new Error("No valid response from Gemini.");
+            }
+            
+            geminiTextContent.innerHTML = result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+
+        } catch (error) {
+            console.error("Search Error:", error);
+            geminiTextContent.innerHTML = `<div class="text-center p-4 bg-red-100"><p class="font-bold">حدث خطأ</p><p class="text-sm mt-2">${error.message}</p></div>`;
+        } finally {
+            spinner.style.display = 'none';
+        }
     }
 
+    // --- Event Listeners ---
     explorerButtons.forEach(button => {
         button.addEventListener('click', () => {
             const plantName = plantNameInput.value.trim();
-            if (plantName) handleSearch(plantName, button.dataset.type);
-            else alert('الرجاء إدخال اسم النبات أولاً.');
+            if (plantName) {
+                handleSearch(plantName, button.dataset.type);
+            } else {
+                alert('الرجاء إدخال اسم النبات أولاً.');
+            }
         });
     });
+    
+    closeModalBtn.addEventListener('click', () => { geminiModal.style.display = 'none'; });
+    geminiModal.addEventListener('click', (event) => {
+        if (event.target === geminiModal) geminiModal.style.display = 'none';
+    });
 
-    closeModalBtn.addEventListener('click', () => geminiModal.style.display = 'none');
-
-    // Load map
-    fetch('map.svg')
-        .then(response => response.text())
-        .then(svgData => {
-            mapContainer.innerHTML = svgData;
-            const map = document.getElementById('saudi-map');
-            const provinceArabicNames = { /* ... all province names ... */ };
-            map.addEventListener('click', (event) => {
-                const provinceElement = event.target.closest('.province');
-                if (provinceElement) {
-                    alert(`لقد نقرت على: ${provinceArabicNames[provinceElement.id]}`);
-                }
-            });
-        });
-
+    // --- Initialize ---
     showSlide(0);
 });
