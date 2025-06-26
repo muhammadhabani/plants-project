@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'almadinah-province': 'منطقة المدينة المنورة',
             'hail-province': 'منطقة حائل',
             'tabuk-province': 'منطقة تبوك',
-            'makkah-province': 'منطقة مكة المكرمة'
+            'makkah-province': 'منطقة مكة المكرمة',
             'aljowf-province': 'منطقة الجوف'
             // أضف مناطق أخرى هنا إذا كانت موجودة في SVG ولم يتم تضمينها (مثل الجوف)
         };
