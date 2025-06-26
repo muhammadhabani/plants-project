@@ -18,3 +18,25 @@ h1, h2, h3 { font-family: 'Amiri', serif; }
     animation: spin 1s ease infinite; margin: 20px auto; 
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* --- New CSS for the Interactive Map --- */
+.interactive-map {
+    width: 100%;
+    max-width: 700px; /* Adjust size as needed */
+    height: auto;
+}
+.interactive-map .province {
+    fill: #e3d5b8; /* Default sandy color for all provinces */
+    stroke: #6a4f3e; /* Darker brown border */
+    stroke-width: 1.5;
+    transition: fill 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smooth transition */
+}
+/* Hover effect for provinces */
+.interactive-map .province:hover {
+    fill: #a0522d; /* Darker color on hover */
+    cursor: pointer;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+/* أنماط الـ modal الجديد للخريطة */
+#provinceInfoModal {
+    display: none; /* سيتم التحكم فيه بواسطة JavaScript */
+}
