@@ -29,8 +29,15 @@
     <main class="flex justify-center items-center min-h-screen w-full p-4">
         <div class="w-full max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-lg text-center">
             <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">الخريطة التفاعلية للنباتات</h2>
-            <p class="text-lg text-gray-600 mb-6">انقر على أي منطقة لاستكشاف النباتات فيها</p>
+            <p class="text-lg text-gray-600 mb-6">انقر على أي منطقة لاستكشاف النباتات فيها، أو ابحث عنها</p>
             
+            <div class="mb-8">
+                <label for="provinceSearchInput" class="block text-lg font-semibold text-gray-700 mb-3 text-right">ابحث عن منطقة:</label>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="provinceSearchInput" class="flex-grow p-3 text-lg border-2 border-gray-300 rounded-lg" placeholder="مثال: الرياض، الجوف..." dir="rtl">
+                    <button id="searchProvinceBtn" class="px-6 py-3 bg-[#6a4f3e] text-white rounded-lg font-semibold shadow-md hover:bg-[#5a3f2e] transition-all transform hover:scale-105">ابحث</button>
+                </div>
+            </div>
             <?xml version="1.0" encoding="UTF-8"?>
             <svg id="saudi-map" class="interactive-map mx-auto" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="614.63" height="459.94" viewBox="0 0 614.63 459.94">
                 <g class="province" id="albahah-province"> <polygon points="219.87 336.45 220.54 337.93 220.1 339.86 220.02 341.12 220.54 341.57 219.85 342.15 218.91 341.93 216.01 346.17 214.38 347.8 213.42 349.36 212.16 352.77 212.16 355.22 211.49 357.3 210.38 358.56 210.38 360.72 209.04 362.35 207.38 362.12 205.11 362.35 203.18 363.46 204.07 364.57 203.18 365.47 203.54 366.79 202.8 368.13 201.25 367.76 200.13 368.8 198.21 368.8 197.02 368.8 195.46 369.98 195.46 367.69 190.11 367.61 191.6 366.36 193.09 365.35 192.86 364.27 191.01 363.75 189.15 362.27 187.44 360.72 189.08 358.71 185.96 357.07 183.96 354.63 183.65 352.03 183.96 348.54 187.37 346.76 188.4 343.42 190.26 343.05 192.05 343.05 191.9 344.53 193.24 344.01 193.75 341.42 194.71 339.86 196.05 337.85 196.28 335.48 197.46 333.77 197.02 331.25 199.32 329.98 201.55 330.95 203.26 331.84 206.3 333.11 208.08 334.89 208.67 335.97 210.38 335.63 212.6 335.11 214.75 333.7 215.5 335.18 215.5 336.6 216.83 337.34 219.87 336.45"/> </g>
@@ -55,16 +62,18 @@
                     <button id="closeProvinceModalBtn" class="absolute top-4 left-4 text-3xl text-gray-500 hover:text-gray-800 transition-colors">&times;</button>
                     <h3 id="provinceModalTitle" class="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 text-center"></h3>
                     <div id="provinceDetails" class="text-gray-700 text-lg leading-relaxed text-right min-h-[100px] max-h-[40vh] overflow-y-auto pr-2">
-    <div class="spinner" style="display: none;"></div> <p id="provinceDetailsText"></p> </div>
+                        <div class="spinner" style="display: none;"></div>
+                        <p id="provinceDetailsText"></p>
                     </div>
                 </div>
             </div>
 
-            <button id="backToHomeBtn" class="mt-8 px-8 py-2 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">
+            <button id="backToHomeBtn" class="block mx-auto mt-8 px-8 py-2 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">
                 العودة للصفحة الرئيسية
             </button>
         </div>
-    </main>    
+    </main>
+    
+    <script src="script.js"></script>
 </body>
-      <script src="script.js"></script>
 </html>
