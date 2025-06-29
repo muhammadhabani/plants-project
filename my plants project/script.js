@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLoaded
 
     // --- Global Elements and Navigation ---
-    // هذه الأزرار موجودة في صفحات مختلفة ولكنها تربط الصفحات ببعضها، لذلك يتم تعريفها في النطاق العام
     const goToMapBtn = document.getElementById('goToMapBtn');
     const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
     const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // هذا الزر فقط في rare/invasive pages
@@ -48,17 +47,19 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
         if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
 
+        console.log(`Attempting to fetch from: ${filePath}`); // تشخيص: هل المسار صحيح؟
         try {
             const response = await fetch(filePath);
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text(); // حاول قراءة نص الخطأ
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             currentPlantListData = await response.json();
             console.log(`Loaded from ${filePath}:`, currentPlantListData);
             renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب مباشرة
         } catch (error) {
             console.error(`Could not fetch plant list from ${filePath}:`, error);
-            if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}</li>`;
+            if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}<br>يرجى التأكد من وجود ملف JSON في المسار الصحيح (${filePath})</li>`;
         } finally {
             if (plantsListSpinner) plantsListSpinner.style.display = 'none';
         }
@@ -70,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         if (!plantsList) return;
 
         plantsList.innerHTML = '';
-        if (plantsToDisplay.length === 0) {
-            plantsList.innerHTML = '<li class="text-gray-600 text-center">لا توجد نباتات مطابقة لمعايير البحث.</li>';
+        if (!plantsToDisplay || plantsToDisplay.length === 0) { // تأكد من أن plantsToDisplay ليست null/undefined
+            plantsList.innerHTML = '<li class="text-gray-600 text-center">لا توجد نباتات لعرضها أو لا توجد نتائج مطابقة.</li>';
             return;
         }
 
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     // --- Logic specific to index.html (Main Page) ---
     const slide1 = document.getElementById('slide-1');
 
-    if (slide1) { // بداية كتلة index.html
+    if (slide1) {
         const slides = [slide1, document.getElementById('slide-2')];
         const backgrounds = [document.getElementById('bg-1'), document.getElementById('bg-2')];
         const startBtn = document.getElementById('startBtn');
@@ -248,13 +249,18 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             });
         }
         
-        showSlide(0);
-    } // نهاية كتلة index.html
+        // التحقق من hash في URL عند تحميل index.html
+        if (window.location.hash === '#explorer') {
+            showSlide(1); // عرض slide-2 مباشرة إذا كان الهاش هو #explorer
+        } else {
+            showSlide(0); // عرض slide-1 افتراضياً
+        }
+    }
     
     // --- Logic specific to map.html (Map Page) ---
     const map = document.getElementById('saudi-map'); 
 
-    if (map) { // بداية كتلة map.html
+    if (map) {
         fetchPlantsData();
         fetchProvincesInfo();
 
@@ -492,29 +498,34 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
     if (backToMainFromListBtn) { // هذا الزر موجود فقط في صفحات القوائم (النادرة/الغازية)
         backToMainFromListBtn.addEventListener('click', () => {
-            window.location.href = 'index.html';
+            window.location.href = 'index.html#explorer'; // التغيير هنا: العودة إلى Slide 2 (مستكشف النباتات)
         });
     }
 
     // --- Logic for Specific Plant Lists (Rare/Invasive) ---
     const plantsListElement = document.getElementById('plantsList');
     const plantSearchInputElement = document.getElementById('plantSearchInput');
-    const searchPlantListBtn = document.getElementById('searchPlantListBtn'); // زر البحث في صفحات القوائم
+    const searchPlantListBtn = document.getElementById('searchPlantListBtn');
 
-    if (plantsListElement) { // بداية كتلة قوائم النباتات (نادرة/غازية)
+    if (plantsListElement) {
         const path = window.location.pathname;
         if (path.includes('rare-plants-list.html')) {
+            console.log('Loading Rare/Endangered Plants List');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
         } else if (path.includes('invasive-plants-list.html')) {
+            console.log('Loading Invasive Plants List');
             fetchSpecificPlantList('documents/invasive_plants.json');
         }
 
-        // ربط زر البحث بفلتر القوائم
+        // ربط زر البحث بفلتر القوائم عند النقر وعلى كل تغيير في حقل الإدخال
         if (plantSearchInputElement && searchPlantListBtn) {
-            searchPlantListBtn.addEventListener('click', filterPlantsList); // تصفية عند النقر على الزر
-            plantSearchInputElement.addEventListener('input', filterPlantsList); // تصفية فورية عند الكتابة
+            searchPlantListBtn.addEventListener('click', filterPlantsList);
+            plantSearchInputElement.addEventListener('input', filterPlantsList);
+        } else if (plantSearchInputElement && !searchPlantListBtn) {
+             // لو المستخدم قرر إزالة زر البحث وأراد البحث فورياً عند الكتابة فقط
+            plantSearchInputElement.addEventListener('input', filterPlantsList);
         }
-    } // نهاية كتلة قوائم النباتات
+    }
 
 
 }); // نهاية DOMContentLoaded
