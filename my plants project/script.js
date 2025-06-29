@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     // --- Global Data Storage ---
     let plantsData = [];
     let provincesInfoData = [];
-    let currentPlantListData = [];
-    let highlightedProvince = null;
+    let currentPlantListData = []; // لبيانات القوائم النادرة/الغازية
+    let highlightedProvince = null; // للمناطق في الخريطة
 
     // --- Data Fetching Functions ---
     async function fetchPlantsData() {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         try {
             const response = await fetch(filePath);
             if (!response.ok) {
-                const errorText = await response.text();
+                const errorText = await response.text(); // حاول قراءة نص الخطأ
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             currentPlantListData = await response.json();
@@ -543,18 +543,18 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const path = window.location.pathname;
         console.log('Current path for list page:', path);
         
-        // تعديل الشرط لجعل التحقق أكثر مرونة ودقة
-        const filename = path.split('/').pop(); // استخراج اسم الملف فقط (مثلاً rare-plants-list.html)
-        console.log('Extracted filename for list page:', filename); // تشخيص: ما هو اسم الملف المستخرج؟
+        const filename = path.split('/').pop(); // استخراج اسم الملف فقط (مثلاً rare-plants-list)
+        console.log('Extracted filename for list page:', filename);
 
-        if (filename === 'rare-plants-list.html') { // استخدام مقارنة مباشرة
+        // التعديل هنا: مقارنة مباشرة باسم الملف بدون الامتداد
+        if (filename === 'rare-plants-list') { 
             console.log('Detected Rare/Endangered Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
-        } else if (filename === 'invasive-plants-list.html') { // استخدام مقارنة مباشرة
+        } else if (filename === 'invasive-plants-list') { 
             console.log('Detected Invasive Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/invasive_plants.json');
         } else {
-            console.warn('Could not identify specific list page based on filename.'); // تشخيص: إذا لم يتطابق أي مسار
+            console.warn('Could not identify specific list page based on filename.');
         }
 
         if (plantSearchInputElement && searchPlantListBtn) {
