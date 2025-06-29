@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النباتات النادرة والمهددة بالانقراض</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #1a202c;
+            overflow: auto; /* السماح بالتمرير في هذه الصفحة */
+        }
+        h1, h2, h3 {
+            font-family: 'Amiri', serif;
+        }
+        .page-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; z-index: -1;
+            background-image: url('bg1.webp'); /* يمكنك اختيار الخلفية المناسبة */
+            opacity: 0.5;
+        }
+        /* Spinner style (موجودة في style.css ولكن نضعها هنا للتأكد) */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1); width: 36px; height: 36px;
+            border-radius: 50%; border-left-color: #6a4f3e;
+            animation: spin 1s ease infinite; margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+    <div class="page-background"></div>
+
+    <main class="flex justify-center items-center min-h-screen w-full p-4">
+        <div class="w-full max-w-5xl mx-auto bg-white/80 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-lg">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 text-center">النباتات النادرة والمهددة بالانقراض</h1>
+            <p class="text-lg text-gray-700 mb-8 text-center">تعرف على النباتات التي تواجه خطر الانقراض في المملكة العربية السعودية وأهمية الحفاظ عليها.</p>
+            
+            <div class="mb-8">
+                <label for="plantSearchInput" class="block text-lg font-semibold text-gray-700 mb-3 text-right">ابحث عن نبات:</label>
+                <input type="text" id="plantSearchInput" class="w-full p-3 text-lg border-2 border-gray-300 rounded-lg" placeholder="مثال: سدر، شيح..." dir="rtl">
+            </div>
+
+            <div id="plantsListContainer" class="bg-gray-50/80 p-6 rounded-xl border border-gray-200 shadow-inner max-h-[60vh] overflow-y-auto">
+                <div class="spinner" style="display: none;"></div>
+                <ul id="plantsList" class="space-y-4 text-right">
+                    </ul>
+            </div>
+
+            <button id="backToMainFromListBtn" class="block mx-auto mt-8 px-8 py-2 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">
+                العودة للصفحة الرئيسية
+            </button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
