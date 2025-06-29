@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     async function fetchProvincesInfo() {
         console.log('Fetching provinces_info.json...'); // تشخيص
         try {
-            const response = await fetch('provinces_info.json');
+            // ****** التعديل هنا: إضافة مسار المجلد 'documents/' ******
+            const response = await fetch('documents/provinces_info.json'); 
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
