@@ -1,14 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Global Elements and Navigation (تكون موجودة في كلا الصفحتين أو تتفاعل بينهما) ---
-    const goToMapBtn = document.getElementById('goToMapBtn'); // الزر في index.html للانتقال للخريطة
-    const backToHomeBtn = document.getElementById('backToHomeBtn'); // زر العودة من الخريطة إلى index.html
+    // --- Global Elements and Navigation ---
+    const goToMapBtn = document.getElementById('goToMapBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // الزر المشترك في صفحات القوائم
 
-    // متغير لتخزين بيانات النباتات
-    let plantsData = [];
-    let highlightedProvince = null; // لتتبع المنطقة المميزة حالياً
+    let plantsData = []; // بيانات مستكشف النباتات
+    let provincesInfoData = []; // بيانات معلومات المناطق
+    let highlightedProvince = null; // للمناطق في الخريطة
 
-    // دالة لجلب بيانات النباتات
+    // متغيرات جديدة لقوائم النباتات النادرة/الغازية
+    let currentPlantListData = []; // لتخزين البيانات التي يتم تحميلها (نادرة أو غازية)
+    const plantsList = document.getElementById('plantsList'); // قائمة UL لعرض النباتات
+    const plantSearchInput = document.getElementById('plantSearchInput'); // حقل البحث في صفحات القوائم
+    const plantsListSpinner = plantsList ? plantsList.previousElementSibling : null; // السبينر قبل قائمة النباتات
+
+    // --- Data Fetching Functions ---
     async function fetchPlantsData() {
         try {
             const response = await fetch('plants.json');
@@ -21,6 +28,126 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Could not fetch plants data:', error);
         }
     }
+
+    async function fetchProvincesInfo() {
+        try {
+            const response = await fetch('provinces_info.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            provincesInfoData = await response.json();
+            console.log('Provinces info loaded:', provincesInfoData);
+        } catch (error) {
+            console.error('Could not fetch provinces info:', error);
+        }
+    }
+
+    // دالة جديدة لجلب بيانات قوائم النباتات (النادرة/الغازية)
+    async function fetchSpecificPlantList(filePath) {
+        if (plantsListSpinner) plantsListSpinner.style.display = 'block';
+        if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
+
+        try {
+            const response = await fetch(filePath);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            currentPlantListData = await response.json();
+            console.log(`Loaded from ${filePath}:`, currentPlantListData);
+            renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب
+        } catch (error) {
+            console.error(`Could not fetch plant list from ${filePath}:`, error);
+            if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}</li>`;
+        } finally {
+            if (plantsListSpinner) plantsListSpinner.style.display = 'none';
+        }
+    }
+
+    // دالة جديدة لعرض قائمة النباتات في الـ UL (تم تحديثها لدعم كل أنواع البيانات)
+    function renderPlantList(plantsToDisplay) {
+        if (!plantsList) return;
+
+        plantsList.innerHTML = '';
+        if (plantsToDisplay.length === 0) {
+            plantsList.innerHTML = '<li class="text-gray-600 text-center">لا توجد نباتات مطابقة لمعايير البحث.</li>';
+            return;
+        }
+
+        plantsToDisplay.forEach(plant => {
+            const listItem = document.createElement('li');
+            listItem.className = 'bg-white/70 p-4 rounded-lg shadow-sm border border-gray-200';
+            let content = `<h4 class="text-xl font-bold text-gray-800">${plant.name}`;
+            if (plant.scientific_name) {
+                content += ` (<span class="italic text-sm text-gray-600">${plant.scientific_name}</span>)`;
+            }
+            content += `</h4>`;
+            
+            if (plant.local_names && plant.local_names.length > 0) {
+                content += `<p class="text-sm text-gray-600 mt-1">الأسماء المحلية: ${plant.local_names.join(', ')}</p>`;
+            }
+            if (plant.status) { // للنباتات النادرة
+                content += `<p class="text-md font-semibold text-blue-700 mt-2">الحالة: ${plant.status}</p>`;
+            } else if (plant.impact) { // للنباتات الغازية
+                content += `<p class="text-md font-semibold text-orange-700 mt-2">التأثير: ${plant.impact}</p>`;
+            }
+
+            // عرض حقول إضافية للنباتات الغازية والنادرة
+            if (plant.family) {
+                content += `<p class="text-sm text-gray-700 mt-1">العائلة: ${plant.family}</p>`;
+            }
+            if (plant.origin) {
+                content += `<p class="text-sm text-gray-700 mt-1">الموطن الأصلي: ${plant.origin}</p>`;
+            }
+            if (plant.propagation_methods) {
+                content += `<p class="text-sm text-gray-700 mt-1">طرق الإكثار: ${plant.propagation_methods}</p>`;
+            }
+            if (plant.distribution_in_sa) {
+                content += `<p class="text-sm text-gray-700 mt-1">التوزيع في السعودية: ${plant.distribution_in_sa}</p>`;
+            }
+            if (plant.habit) {
+                content += `<p class="text-sm text-gray-700 mt-1">الشكل: ${plant.habit}</p>`;
+            }
+            
+            // الوصف العام للنبات النادر
+            if (plant.description) {
+                content += `<p class="text-sm text-gray-700 mt-2">${plant.description}</p>`;
+            }
+            
+            listItem.innerHTML = content;
+            plantsList.appendChild(listItem);
+        });
+    }
+
+    // دالة لتصفية قائمة النباتات بناءً على البحث
+    function filterPlantsList() {
+        const searchTerm = plantSearchInput.value.trim().toLowerCase();
+        if (!searchTerm) {
+            renderPlantList(currentPlantListData);
+            return;
+        }
+
+        const filteredPlants = currentPlantListData.filter(plant => {
+            if (plant.name && plant.name.toLowerCase().includes(searchTerm)) return true;
+            if (plant.scientific_name && plant.scientific_name.toLowerCase().includes(searchTerm)) return true;
+            if (plant.local_names && plant.local_names.some(name => name.toLowerCase().includes(searchTerm))) return true;
+            
+            // حقول خاصة بالنباتات النادرة
+            if (plant.status && plant.status.toLowerCase().includes(searchTerm)) return true;
+            if (plant.description && plant.description.toLowerCase().includes(searchTerm)) return true;
+            if (plant.propagation_methods && plant.propagation_methods.toLowerCase().includes(searchTerm)) return true;
+
+            // حقول خاصة بالنباتات الغازية
+            if (plant.impact && plant.impact.toLowerCase().includes(searchTerm)) return true;
+            if (plant.origin && plant.origin.toLowerCase().includes(searchTerm)) return true;
+            if (plant.family && plant.family.toLowerCase().includes(searchTerm)) return true; // Family is common but can be here too
+            if (plant.distribution_in_sa && plant.distribution_in_sa.toLowerCase().includes(searchTerm)) return true;
+            if (plant.habit && plant.habit.toLowerCase().includes(searchTerm)) return true;
+
+            return false;
+        });
+        renderPlantList(filteredPlants);
+    }
+
 
     // --- Logic specific to index.html (Main Page) ---
     const slide1 = document.getElementById('slide-1');
@@ -132,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (map) {
         fetchPlantsData();
+        fetchProvincesInfo();
 
         const provinceInfoModal = document.getElementById('provinceInfoModal');
         const closeProvinceModalBtn = document.getElementById('closeProvinceModalBtn');
@@ -140,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const provinceDetailsText = document.getElementById('provinceDetailsText');
         const provinceSpinner = provinceInfoModal ? provinceInfoModal.querySelector('.spinner') : null;
 
-        // عناصر البحث الجديدة
         const provinceSearchInput = document.getElementById('provinceSearchInput');
         const searchProvinceBtn = document.getElementById('searchProvinceBtn');
 
@@ -161,32 +288,26 @@ document.addEventListener('DOMContentLoaded', () => {
             'aljowf-province': 'منطقة الجوف'
         };
 
-        // دالة لإزالة التظليل من المناطق
         function resetProvinceHighlight() {
             if (highlightedProvince) {
-                highlightedProvince.style.fill = ''; // إعادة اللون الافتراضي (من CSS)
-                highlightedProvince.style.stroke = ''; // إعادة الحدود الافتراضية
-                highlightedProvince.style.transform = ''; // إزالة أي تحريك
+                highlightedProvince.style.fill = '';
+                highlightedProvince.style.stroke = '';
+                highlightedProvince.style.transform = '';
                 highlightedProvince = null;
             }
         }
 
-        // دالة لتمييز منطقة معينة
         function highlightProvince(provinceId) {
-            resetProvinceHighlight(); // إزالة التمييز السابق أولاً
+            resetProvinceHighlight();
             const targetProvince = document.getElementById(provinceId);
             if (targetProvince) {
                 targetProvince.style.fill = '#FFD700'; // لون أصفر ذهبي للتمييز
                 targetProvince.style.stroke = '#FF4500'; // حدود حمراء برتقالية
                 targetProvince.style.transform = 'scale(1.02)'; // تكبير بسيط
                 highlightedProvince = targetProvince;
-                
-                // يمكنك أيضًا التمرير إلى المنطقة إذا كانت الخريطة كبيرة
-                // targetProvince.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
-        // دالة جديدة لاستدعاء Gemini للحصول على معلومات المناطق
         async function handleGeminiProvinceSearch(provinceName) {
             if (provinceSpinner) provinceSpinner.style.display = 'block';
             if (provinceDetailsText) provinceDetailsText.innerHTML = '';
@@ -226,36 +347,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         map.addEventListener('click', (event) => {
-            resetProvinceHighlight(); // إزالة التمييز عند النقر على أي مكان في الخريطة
+            resetProvinceHighlight();
 
             const provinceElement = event.target.closest('.province');
             if (provinceElement) {
                 const provinceId = provinceElement.id;
                 const arabicName = provinceArabicNames[provinceId] || 'منطقة غير معروفة';
                 
-                highlightProvince(provinceId); // تمييز المنطقة عند النقر
+                highlightProvince(provinceId);
                 
-                if (provinceModalTitle) provinceModalTitle.textContent = `نباتات في ${arabicName}`;
+                if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
                 
-                const plantsInProvince = plantsData.filter(plant => plant.province === provinceId);
-
                 if (provinceDetails) {
                     if (provinceSpinner) provinceSpinner.style.display = 'none';
                     if (provinceDetailsText) provinceDetailsText.innerHTML = '';
 
+                    const currentProvinceInfo = provincesInfoData.find(info => info.id === provinceId);
+                    if (currentProvinceInfo && currentProvinceInfo.description) {
+                        provinceDetailsText.innerHTML += `
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">${currentProvinceInfo.arabic_name}</h4>
+                            <p class="mb-4">${currentProvinceInfo.description}</p>
+                            <hr class="border-gray-300 my-4">
+                        `;
+                    } else {
+                        provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد معلومات وصفية محلية عن هذه المنطقة.</p>`;
+                    }
+
+                    const plantsInProvince = plantsData.filter(plant => plant.province === provinceId);
                     if (plantsInProvince.length > 0) {
-                        let detailsHtml = '<ul class="list-disc list-inside space-y-2">';
+                        provinceDetailsText.innerHTML += `<h4 class="text-xl font-bold text-gray-800 mb-2">النباتات المتوفرة محلياً:</h4>`;
+                        let plantsHtml = '<ul class="list-disc list-inside space-y-2">';
                         plantsInProvince.forEach(plant => {
-                            detailsHtml += `<li class="text-gray-700">
+                            plantsHtml += `<li class="text-gray-700">
                                                 <span class="font-bold text-green-700">${plant.name}</span> 
                                                 (<span class="italic text-sm">${plant.scientific_name}</span>)
                                                 <p class="text-xs text-gray-500 mt-1">${plant.info.substring(0, 100)}...</p>
                                             </li>`;
                         });
-                        detailsHtml += '</ul>';
-                        provinceDetailsText.innerHTML = detailsHtml;
+                        plantsHtml += '</ul>';
+                        provinceDetailsText.innerHTML += plantsHtml;
                     } else {
-                        provinceDetailsText.innerHTML = `<p class="text-gray-600">جاري البحث عن نباتات شائعة في ${arabicName}...</p>`;
+                        provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد بيانات نباتات متوفرة محلياً لهذه المنطقة.</p>`;
+                        provinceDetailsText.innerHTML += `<p class="text-gray-600">جاري البحث عن نباتات شائعة عبر الذكاء الاصطناعي...</p>`;
                         handleGeminiProvinceSearch(arabicName);
                     }
                     if (provinceInfoModal) provinceInfoModal.style.display = 'flex';
@@ -266,25 +399,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (closeProvinceModalBtn) {
             closeProvinceModalBtn.addEventListener('click', () => { 
                 if (provinceInfoModal) provinceInfoModal.style.display = 'none';
-                resetProvinceHighlight(); // إزالة التمييز عند إغلاق الـ Modal
+                resetProvinceHighlight();
             });
         }
         if (provinceInfoModal) {
             provinceInfoModal.addEventListener('click', (event) => {
                 if (event.target === provinceInfoModal) {
                     provinceInfoModal.style.display = 'none';
-                    resetProvinceHighlight(); // إزالة التمييز عند النقر خارج الـ Modal
+                    resetProvinceHighlight();
                 }
             });
         }
 
-        // --- Logic for Province Search Box ---
+        const searchProvinceBtn = document.getElementById('searchProvinceBtn');
         if (searchProvinceBtn && provinceSearchInput) {
             searchProvinceBtn.addEventListener('click', () => {
                 const searchTerm = provinceSearchInput.value.trim().toLowerCase();
                 let foundProvinceId = null;
 
-                // البحث عن المنطقة بالاسم العربي أو الإنجليزي (ID)
                 for (const id in provinceArabicNames) {
                     if (provinceArabicNames[id].toLowerCase().includes(searchTerm) || id.toLowerCase().includes(searchTerm)) {
                         foundProvinceId = id;
@@ -293,30 +425,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (foundProvinceId) {
-                    highlightProvince(foundProvinceId); // تمييز المنطقة
-                    // يمكنك أيضاً فتح الـ Modal تلقائياً هنا إذا أردت
-                    // ونعرض معلوماتها
+                    highlightProvince(foundProvinceId);
                     const arabicName = provinceArabicNames[foundProvinceId];
-                    if (provinceModalTitle) provinceModalTitle.textContent = `نباتات في ${arabicName}`;
-                    const plantsInProvince = plantsData.filter(plant => plant.province === foundProvinceId);
+                    if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
                     
                     if (provinceDetails) {
                         if (provinceSpinner) provinceSpinner.style.display = 'none';
                         if (provinceDetailsText) provinceDetailsText.innerHTML = '';
 
+                        const currentProvinceInfo = provincesInfoData.find(info => info.id === foundProvinceId);
+                        if (currentProvinceInfo && currentProvinceInfo.description) {
+                            provinceDetailsText.innerHTML += `
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">${currentProvinceInfo.arabic_name}</h4>
+                                <p class="mb-4">${currentProvinceInfo.description}</p>
+                                <hr class="border-gray-300 my-4">
+                            `;
+                        } else {
+                            provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد معلومات وصفية محلية عن هذه المنطقة.</p>`;
+                        }
+
+                        const plantsInProvince = plantsData.filter(plant => plant.province === foundProvinceId);
                         if (plantsInProvince.length > 0) {
-                            let detailsHtml = '<ul class="list-disc list-inside space-y-2">';
+                            provinceDetailsText.innerHTML += `<h4 class="text-xl font-bold text-gray-800 mb-2">النباتات المتوفرة محلياً:</h4>`;
+                            let plantsHtml = '<ul class="list-disc list-inside space-y-2">';
                             plantsInProvince.forEach(plant => {
-                                detailsHtml += `<li class="text-gray-700">
+                                plantsHtml += `<li class="text-gray-700">
                                                     <span class="font-bold text-green-700">${plant.name}</span> 
                                                     (<span class="italic text-sm">${plant.scientific_name}</span>)
                                                     <p class="text-xs text-gray-500 mt-1">${plant.info.substring(0, 100)}...</p>
                                                 </li>`;
                             });
-                            detailsHtml += '</ul>';
-                            provinceDetailsText.innerHTML = detailsHtml;
+                            plantsHtml += '</ul>';
+                            provinceDetailsText.innerHTML += plantsHtml;
                         } else {
-                            provinceDetailsText.innerHTML = `<p class="text-gray-600">جاري البحث عن نباتات شائعة في ${arabicName}...</p>`;
+                            provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد بيانات نباتات متوفرة محلياً لهذه المنطقة.</p>`;
+                            provinceDetailsText.innerHTML += `<p class="text-gray-600">جاري البحث عن نباتات شائعة عبر الذكاء الاصطناعي...</p>`;
                             handleGeminiProvinceSearch(arabicName);
                         }
                         if (provinceInfoModal) provinceInfoModal.style.display = 'flex';
@@ -324,11 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 } else {
                     alert('لم يتم العثور على منطقة بهذا الاسم. يرجى التأكد من الإملاء.');
-                    resetProvinceHighlight(); // إزالة أي تمييز إذا لم يتم العثور على شيء
+                    resetProvinceHighlight();
                 }
             });
 
-            // يمكن أيضاً تفعيل البحث عند الضغط على Enter
             provinceSearchInput.addEventListener('keypress', (event) => {
                 if (event.key === 'Enter') {
                     searchProvinceBtn.click();
@@ -339,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } // نهاية if (map)
 
 
-    // --- General Navigation between index.html and map.html ---
+    // --- General Navigation between index.html and other pages ---
     if (goToMapBtn) {
         goToMapBtn.addEventListener('click', () => {
             window.location.href = 'map.html';
@@ -351,5 +493,27 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         });
     }
+
+    if (backToMainFromListBtn) {
+        backToMainFromListBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
+
+    // --- Logic for Specific Plant Lists (Rare/Invasive) ---
+    // هذه الكتل ستُنفذ فقط إذا كان plantsList موجوداً في الصفحة الحالية
+    if (plantsList) {
+        const path = window.location.pathname;
+        if (path.includes('rare-plants-list.html')) {
+            fetchSpecificPlantList('documents/rare_endangered_plants.json'); // تأكد من المسار الصحيح لملف JSON
+        } else if (path.includes('invasive-plants-list.html')) {
+            fetchSpecificPlantList('documents/invasive_plants.json'); // تأكد من المسار الصحيح لملف JSON
+        }
+
+        if (plantSearchInput) {
+            plantSearchInput.addEventListener('input', filterPlantsList); // تصفية فورية عند الإدخال
+        }
+    }
+
 
 }); // نهاية DOMContentLoaded
