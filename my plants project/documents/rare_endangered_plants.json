@@ -1,0 +1,394 @@
+[
+  {
+    "name": "السراء",
+    "scientific_name": "Grewia erythraea",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانقراض / نادرة",
+    "description": "نبات نادر ينمو في مناطق محددة من المملكة، يحتاج للحماية للحفاظ على وجوده."
+  },
+  {
+    "name": "النبع",
+    "scientific_name": "Grewia tenx",
+    "local_names": [],
+    "propagation_methods": "بنور - عقل",
+    "status": "مهددة بالانقراض / نادرة",
+    "description": "نبات نادر ينمو في مناطق محددة من المملكة، يحتاج للحماية للحفاظ على وجوده."
+  },
+  {
+    "name": "الشوحط",
+    "scientific_name": "Grewia tembensis",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانقراض / نادرة",
+    "description": "نبات نادر ينمو في مناطق محددة من المملكة، يحتاج للحماية للحفاظ على وجوده."
+  },
+  {
+    "name": "النشم",
+    "scientific_name": "Grewia velutina",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر ينمو في مناطق محددة من المملكة، يحتاج للحماية للحفاظ على وجوده."
+  },
+  {
+    "name": "العبال",
+    "scientific_name": "Rose abyssinica",
+    "local_names": ["الورد البري"],
+    "propagation_methods": "العقل + البنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع من الورد البري النادر في المملكة، يتميز بجمال أزهاره."
+  },
+  {
+    "name": "الحمرار",
+    "scientific_name": "Cadia purpurea",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر يتميز بخصائصه الفريدة، وهو بحاجة لجهود الحفاظ عليه."
+  },
+  {
+    "name": "الدومبيا",
+    "scientific_name": "Dombeya torrida",
+    "local_names": [],
+    "propagation_methods": "بذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر ينمو في مناطق محددة، ويعد جزءًا من التنوع البيولوجي الفريد للمنطقة."
+  },
+  {
+    "name": "الغرف",
+    "scientific_name": "Cordia sinensis",
+    "local_names": [],
+    "propagation_methods": "بنور - العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة تتواجد في بيئات معينة، وتتميز بخصائصها الطبيعية."
+  },
+  {
+    "name": "السفن",
+    "scientific_name": "Cordia monoica (Cordia ovalis)",
+    "local_names": [],
+    "propagation_methods": "بذور -العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر يتواجد في مناطق محددة، ويتطلب جهودًا للحفاظ عليه."
+  },
+  {
+    "name": "الورف",
+    "scientific_name": "Ehretia cymosa",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر ينمو في بيئات جافة وشبه جافة."
+  },
+  {
+    "name": "الصر",
+    "scientific_name": "Nuxia oppositifolia",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر يتميز بخصائصه الفريدة، ويحتاج للحماية."
+  },
+  {
+    "name": "الضرو",
+    "scientific_name": "Pistacia falcata",
+    "local_names": [],
+    "propagation_methods": "بنور - عقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة ذات أهمية بيئية، تحتاج للحفاظ على موائلها الطبيعية."
+  },
+  {
+    "name": "البطم",
+    "scientific_name": "Pistacia khinjuk",
+    "local_names": [],
+    "propagation_methods": "بنور (أنسجة)",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تنمو في مناطق جبلية معينة، ذات قيمة بيئية."
+  },
+  {
+    "name": "اللوز البري",
+    "scientific_name": "Prunus korshinskyi",
+    "local_names": [],
+    "propagation_methods": "بنور (أنسجة)",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من اللوز البري، يتطلب جهودًا للحماية من الانقراض."
+  },
+  {
+    "name": "الرنف",
+    "scientific_name": "Delonix elata",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتميز بجمال أزهارها، وتعد جزءًا من التنوع النباتي."
+  },
+  {
+    "name": "الطنب",
+    "scientific_name": "Cordia africana",
+    "local_names": ["الخيفان"],
+    "propagation_methods": "العقل - البنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتواجد في بعض المناطق، وتستخدم في الطب الشعبي."
+  },
+  {
+    "name": "الأنب",
+    "scientific_name": "Ficus salicifolia",
+    "local_names": [],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من أشجار التين، يتطلب بيئة خاصة للنمو."
+  },
+  {
+    "name": "السوقم",
+    "scientific_name": "Ficus sycomorus",
+    "local_names": ["الجميز"],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة الجميز نادرة الوجود في المملكة، ذات أهمية تاريخية وبيئية."
+  },
+  {
+    "name": "الرقع",
+    "scientific_name": "Ficus vasta",
+    "local_names": [],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من أشجار التين، يتواجد في مناطق جبلية معينة."
+  },
+  {
+    "name": "المدح",
+    "scientific_name": "Ficus glumosa",
+    "local_names": [],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتميز بأوراقها، وهي بحاجة للحفاظ عليها."
+  },
+  {
+    "name": "الضرف",
+    "scientific_name": "Ficus ingens",
+    "local_names": [],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من أشجار التين، ينمو في بيئات صخرية."
+  },
+  {
+    "name": "البدعة",
+    "scientific_name": "Ficus populifolia",
+    "local_names": [],
+    "propagation_methods": "العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتميز بأوراقها الشبيهة بأوراق الحور."
+  },
+  {
+    "name": "الذرح",
+    "scientific_name": "Breonadia salicina",
+    "local_names": ["الصومل"],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تنمو في الأودية، ذات قيمة بيئية وطبية."
+  },
+  {
+    "name": "التعب",
+    "scientific_name": "Terminalia brownii",
+    "local_names": ["القاع"],
+    "propagation_methods": "بذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتواجد في مناطق معينة، وتتميز بخصائصها."
+  },
+  {
+    "name": "التعب",
+    "scientific_name": "Combretum molle",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتميز بجمال أزهارها، وتحتاج للحماية."
+  },
+  {
+    "name": "اللبخ العملاق",
+    "scientific_name": "Mimusops laurifolia",
+    "local_names": [],
+    "propagation_methods": "بنور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة وكبيرة الحجم، ذات أهمية بيئية كبيرة."
+  },
+  {
+    "name": "الضبر",
+    "scientific_name": "Dobera glabra",
+    "local_names": [],
+    "propagation_methods": "بذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتكيف مع البيئات الجافة، ولها استخدامات تقليدية."
+  },
+  {
+    "name": "الضبر",
+    "scientific_name": "Doberaglabra",
+    "local_names": [],
+    "propagation_methods": "بذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتكيف مع البيئات الجافة، ولها استخدامات تقليدية."
+  },
+  {
+    "name": "العتم",
+    "scientific_name": "Olea europaeasubsp. cuspidata",
+    "local_names": ["الزيتون البري"],
+    "propagation_methods": "بذور + العقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من الزيتون البري، ذو أهمية جينية وبيئية."
+  },
+  {
+    "name": "الدوم",
+    "scientific_name": "Hyphaene thebaica",
+    "local_names": [],
+    "propagation_methods": "بذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نخلة الدوم نادرة الوجود في المملكة، وتحتاج للحماية."
+  },
+  {
+    "name": "النكر",
+    "scientific_name": "Berchemia discolor",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتميز بخصائصها، وهي جزء من التنوع النباتي."
+  },
+  {
+    "name": "الشبارق",
+    "scientific_name": "Celtis africana",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تنمو في مناطق محددة، ولها قيمة بيئية."
+  },
+  {
+    "name": "النكح",
+    "scientific_name": "Celtis toka",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتواجد في بيئات معينة، وتتطلب الحفاظ عليها."
+  },
+  {
+    "name": "القشار",
+    "scientific_name": "Antiaris toxicaria",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة ذات خصائص فريدة، وتعد جزءًا من التنوع البيولوجي."
+  },
+  {
+    "name": "المرالأحمر جزيرة دمسك",
+    "scientific_name": "Commiphora erythraea",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تنتج صمغًا، وهي ذات أهمية بيئية وطبية."
+  },
+  {
+    "name": "الْمُقَزَّحَةُ",
+    "scientific_name": "Dorstenia foetida",
+    "local_names": [],
+    "propagation_methods": "البذور والانسجة",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر يتميز بشكل أزهاره الفريد، ويحتاج للحماية."
+  },
+  {
+    "name": "الظلام",
+    "scientific_name": "Diospyros mespiliformis",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة ذات ثمار صالحة للأكل، وتعد جزءًا من التنوع النباتي."
+  },
+  {
+    "name": "العيك",
+    "scientific_name": "Euclea schimperi",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة تتواجد في مناطق جبلية معينة."
+  },
+  {
+    "name": "العرن",
+    "scientific_name": "Rhus tripartita",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة ذات استخدامات تقليدية، وتتطلب جهود الحفاظ."
+  },
+  {
+    "name": "التألب",
+    "scientific_name": "Rhus retinorrhoea",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة تتواجد في بيئات جافة."
+  },
+  {
+    "name": "التألب الحبشي",
+    "scientific_name": "Rhus abyssinica",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة تتميز بخصائصها، وهي جزء من التنوع النباتي."
+  },
+  {
+    "name": "العصبة",
+    "scientific_name": "Cocculus hirsutus",
+    "local_names": [],
+    "propagation_methods": "البذور والعقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات متسلق نادر، يستخدم في الطب الشعبي."
+  },
+  {
+    "name": "الألوى",
+    "scientific_name": "Tinos pora bakis",
+    "local_names": [],
+    "propagation_methods": "البذور والعقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر ذو خصائص طبية، ويحتاج للحماية."
+  },
+  {
+    "name": "الورف",
+    "scientific_name": "Ehretia obtusifolia",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجرة نادرة تتواجد في بيئات جافة وشبه جافة."
+  },
+  {
+    "name": "الشنضف",
+    "scientific_name": "Erica arborea",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "شجيرة نادرة تنمو في المرتفعات، ذات قيمة بيئية."
+  },
+  {
+    "name": "الثعابة",
+    "scientific_name": "Woodfordia fruticosa",
+    "local_names": [],
+    "propagation_methods": "البذور والعقل",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر يتميز بجمال أزهاره، وهو بحاجة للحفاظ عليه."
+  },
+  {
+    "name": "الخبايا",
+    "scientific_name": "Hibiscus deflersii",
+    "local_names": ["هيبسكس"],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نوع نادر من الهيبسكس، يتميز بجمال أزهاره."
+  },
+  {
+    "name": "Fioria vitifolia",
+    "scientific_name": "Fioria vitifolia",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر، وهو بحاجة للحماية للحفاظ على وجوده."
+  },
+  {
+    "name": "الرين المخملي",
+    "scientific_name": "Abutilon pannosum",
+    "local_names": [],
+    "propagation_methods": "البذور",
+    "status": "مهددة بالانانقراض / نادرة",
+    "description": "نبات نادر، وهو بحاجة للحماية للحفاظ على وجوده."
+  }
+]

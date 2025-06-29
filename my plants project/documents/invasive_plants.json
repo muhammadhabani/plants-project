@@ -1,0 +1,642 @@
+[
+  {
+    "name": "طلح صفصافي",
+    "scientific_name": "Acacia salicina Lindl.",
+    "local_names": ["سنط صفصافي"],
+    "family": "Fabaceae",
+    "origin": "Australia",
+    "distribution_in_sa": "Central and north west regions",
+    "habit": "Shrub",
+    "impact": "ينافس النباتات المحلية على الموارد الطبيعية وقد يؤثر على التنوع البيولوجي."
+  },
+  {
+    "name": "نمول",
+    "scientific_name": "Alternanthera pungens Kunth",
+    "local_names": [],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern Mountains",
+    "habit": "Herb",
+    "impact": "ينتشر بسرعة في المناطق المتأثرة وقد يغير من طبيعة الغطاء النباتي."
+  },
+  {
+    "name": "قطيفة بيضاء",
+    "scientific_name": "Amaranthus albus L.",
+    "local_names": ["عرف الديك"],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central, Eastern and Western regions",
+    "habit": "Herb",
+    "impact": "يعد من الحشائش الضارة في الزراعة ويصعب السيطرة عليه."
+  },
+  {
+    "name": "قطيفة",
+    "scientific_name": "Amaranthus hybridus L.",
+    "local_names": ["رعاف"],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Throughout Saudi Arabia",
+    "habit": "Herb",
+    "impact": "ينتشر بسرعة وينافس المحاصيل والنباتات المحلية."
+  },
+  {
+    "name": "قطيفة شوكية",
+    "scientific_name": "Amaranthus spinosus L.",
+    "local_names": [],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern mountains",
+    "habit": "Herb",
+    "impact": "نبات شوكي يسبب مشاكل في المناطق الزراعية والمراعي."
+  },
+  {
+    "name": "قشدة",
+    "scientific_name": "Annona squamosa L.",
+    "local_names": ["سفرجل"],
+    "family": "Annonaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern mountains (Jabal Fayfa)",
+    "habit": "Tree",
+    "impact": "قد ينمو بشكل كثيف في بعض المناطق ويؤثر على النباتات المحلية."
+  },
+  {
+    "name": "خشخاش مكسيكي",
+    "scientific_name": "Argemone mexicanaL.",
+    "local_names": [],
+    "family": "Papaveraceae",
+    "origin": "South American",
+    "distribution_in_sa": "Southwestern mountains",
+    "habit": "Herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات والإنسان إذا استهلك."
+  },
+  {
+    "name": "خشخاش ذو الزهرة الباهتة",
+    "scientific_name": "Argemone ochroleuca Sweet",
+    "local_names": ["أرجيمونيه", "عين الجمل"],
+    "family": "Papaveraceae",
+    "origin": "South American",
+    "distribution_in_sa": "Southwestern mountains",
+    "habit": "Herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات والإنسان إذا استهلك."
+  },
+  {
+    "name": "تين شوكي اسطواني",
+    "scientific_name": "Austrocylindropuntia subulata (Muehlenpf.) Backeb.",
+    "local_names": ["تين شوكي سبيولاتا"],
+    "family": "Cactaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بكثافة ويشكل عائقاً بسبب أشواكه، ويؤثر على حركة الحيوانات والرعي."
+  },
+  {
+    "name": "رغل",
+    "scientific_name": "Atriplex suberecta",
+    "local_names": [],
+    "family": "Chenopodiaceae",
+    "origin": "Australian",
+    "distribution_in_sa": "Central and eastern regions",
+    "habit": "Shrub",
+    "impact": "قد ينافس النباتات المحلية في البيئات القاحلة."
+  },
+  {
+    "name": "آذريون",
+    "scientific_name": "Bidens aurea (Aiton) Sherff",
+    "local_names": ["شائي", "شاي كاذب"],
+    "family": "Asteraceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern mountains",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الرطبة وقد يؤثر على النظم البيئية المائية."
+  },
+  {
+    "name": "سبط",
+    "scientific_name": "Cenchrus echinatus L.",
+    "local_names": ["دراب", "خذر"],
+    "family": "Fabaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central, eastern western and northern regions",
+    "habit": "P. grass",
+    "impact": "حشيشة ضارة في الأراضي الزراعية والمراعي."
+  },
+  {
+    "name": "سبط",
+    "scientific_name": "Cenchrus gracillimus Nash",
+    "local_names": ["دراب", "خذر"],
+    "family": "Poaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central and eastern regions",
+    "habit": "Annual",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق الزراعية."
+  },
+  {
+    "name": "زربيح سرمق",
+    "scientific_name": "Chenopodium atrovirens Rydb.",
+    "local_names": ["سرمق رجل أوزة داكنة"],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central region",
+    "habit": "Herb",
+    "impact": "يعد من الحشائش الغازية في الأراضي الزراعية."
+  },
+  {
+    "name": "زربيح سرمق",
+    "scientific_name": "Chenopodium desiccatum ssp. leptophylloides (Murr) Wahl",
+    "local_names": [],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central region",
+    "habit": "Herb",
+    "impact": "ينتشر بسرعة في المناطق المضطربة."
+  },
+  {
+    "name": "حامول",
+    "scientific_name": "Cuscuta campestris Yunck.",
+    "local_names": ["لوي"],
+    "family": "Cuscutaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Central , eastern and northern regions",
+    "habit": "Herb",
+    "impact": "نبات متطفل يسبب أضراراً بالغة للمحاصيل والنباتات البرية."
+  },
+  {
+    "name": "تين شوكي اسطواني وردي",
+    "scientific_name": "Cylindropuntia rosea (DC.) Backeb.",
+    "local_names": ["كمثرى هدسون"],
+    "family": "Cactaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بكثافة ويشكل عائقاً بسبب أشواكه، ويؤثر على حركة الحيوانات والرعي."
+  },
+  {
+    "name": "داتورة",
+    "scientific_name": "Datura ferox L.",
+    "local_names": ["البنج", "مي"],
+    "family": "Solanaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات والإنسان."
+  },
+  {
+    "name": "داتورة",
+    "scientific_name": "Datura innoxia Mill.",
+    "local_names": ["البنج", "عين البقر"],
+    "family": "Solanaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Through out Saudi Arabia",
+    "habit": "Herb",
+    "impact": "نبات سام وينتشر بسرعة في المناطق المضطربة."
+  },
+  {
+    "name": "بنج",
+    "scientific_name": "Datura metel L.",
+    "local_names": ["داتورة"],
+    "family": "Solanaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "نبات سام وينتشر في المناطق الزراعية والمراعي."
+  },
+  {
+    "name": "بنج",
+    "scientific_name": "Datura stramonium L.",
+    "local_names": ["داتورة"],
+    "family": "Solanaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات والإنسان."
+  },
+  {
+    "name": "رمرام عطري",
+    "scientific_name": "Dysphania ambrosioides (L.) Mosyakin & Clemants",
+    "local_names": ["شاي مكسيكي"],
+    "family": "Amaranthaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central and southwestern region",
+    "habit": "Herb",
+    "impact": "ينتشر بسرعة في المناطق المضطربة وقد يؤثر على النباتات المحلية."
+  },
+  {
+    "name": "ثفلة",
+    "scientific_name": "Dysphania carinata Mosyakin & Clemants",
+    "local_names": ["عيفقان"],
+    "family": "Amaranthaceae",
+    "origin": "Australian",
+    "distribution_in_sa": "Southwestern Tihama",
+    "habit": "Herb",
+    "impact": "ينمو بكثافة في بعض المناطق ويغير من خصائص التربة."
+  },
+  {
+    "name": "حشيشة الفرس",
+    "scientific_name": "Eclipta prostrata (L.) L.",
+    "local_names": ["سعداء", "سويد"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Central",
+    "habit": "Shrub",
+    "impact": "حشيشة ضارة في المناطق الزراعية والمشاتل."
+  },
+  {
+    "name": "انسيليا",
+    "scientific_name": "Encelia farinosa A.Gray ex Torr.",
+    "local_names": ["فرشاة هشة"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بسرعة في البيئات الجافة وينافس النباتات المحلية."
+  },
+  {
+    "name": "خوع",
+    "scientific_name": "Erigeron bonariensis L.",
+    "local_names": ["حشيش الجبل", "اريغرون بوناري"],
+    "family": "Asteraceae",
+    "origin": "South American",
+    "distribution_in_sa": "Throughout Saudi Arabia",
+    "habit": "Herb",
+    "impact": "حشيشة شائعة في المناطق الزراعية والمناطق المضطربة."
+  },
+  {
+    "name": "أريغرون كندي",
+    "scientific_name": "Erigeron canadensis L.",
+    "local_names": ["كونيزا عطرية"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "ينتشر بسرعة في المناطق الزراعية وعلى جوانب الطرق."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia cyathophora Murray",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Eastern Province",
+    "habit": "P. Herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات الراعية."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia heterophylla L.",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Eastern province",
+    "habit": "P. herb",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات الراعية."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia hirta L.",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Throughout Saudi Arabia",
+    "habit": "Herb",
+    "impact": "نبات سام ينتشر بسرعة في الأراضي الزراعية."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia hypercifolia L.",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "Tropical American",
+    "distribution_in_sa": "Central and Western regions",
+    "habit": "Herb",
+    "impact": "نبات سام ينتشر في المناطق المضطربة."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia maculata L.",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central region",
+    "habit": "Herb",
+    "impact": "نبات سام ينتشر في المناطق الحضرية والحدائق."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia prostrata Aiton",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central region",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق المضطربة والحدائق."
+  },
+  {
+    "name": "أم لبين",
+    "scientific_name": "Euphorbia tirucalli L.",
+    "local_names": ["لبينة", "حليبة", "فربيون"],
+    "family": "Euphorbiaceae",
+    "origin": "East Africa",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub/Tree",
+    "impact": "نبات سام يستخدم في الحدائق وقد ينتشر خارجها."
+  },
+  {
+    "name": "شكيرة",
+    "scientific_name": "Flaveria trinervia (Spreng.) Mohr.",
+    "local_names": ["صبر الحمير", "ورد الحمير"],
+    "family": "Asteraceae",
+    "origin": "American",
+    "distribution_in_sa": "Throughout Saudi Arabia",
+    "habit": "Herb",
+    "impact": "حشيشة شائعة تنتشر بسرعة في المناطق المضطربة."
+  },
+  {
+    "name": "غصغص",
+    "scientific_name": "Galinsoga parviflora Cav.",
+    "local_names": [],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "حشيشة ضارة في المناطق الزراعية والحدائق."
+  },
+  {
+    "name": "رحاب",
+    "scientific_name": "Heliotropium curassavicum L.",
+    "local_names": ["زريقاء", "رقيب الشمس الغبيري", "رمرام"],
+    "family": "Boraginaceae",
+    "origin": "American",
+    "distribution_in_sa": "Eastern, central and southwestern regions",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الرطبة وقد يؤثر على النباتات المحلية."
+  },
+  {
+    "name": "ست الحسن",
+    "scientific_name": "Ipomoea cairica (L.) Sweet",
+    "local_names": ["شب النهار", "جلاب", "مجد الصباح"],
+    "family": "Convolvulaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern and central regions",
+    "habit": "Perennial twiner",
+    "impact": "نبات متسلق ينمو بكثافة ويخنق النباتات الأصلية."
+  },
+  {
+    "name": "مجد الصباح",
+    "scientific_name": "Ipomoea carnea ssp. fistulosa (Mart. ex Choisy) D.F.Austin",
+    "local_names": ["ست الحسن", "عوير"],
+    "family": "Convolvulaceae",
+    "origin": "American",
+    "distribution_in_sa": "Tihama, SW region",
+    "habit": "Shrub",
+    "impact": "نبات متسلق ينمو بكثافة ويخنق النباتات الأصلية."
+  },
+  {
+    "name": "جاتروفا",
+    "scientific_name": "Jatropha curcas L.",
+    "local_names": ["جوز مسهل"],
+    "family": "Euphorbiaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "نبات سام وقد يؤثر على صحة الحيوانات والإنسان."
+  },
+  {
+    "name": "لانتانا كمارا",
+    "scientific_name": "Lantana camara L.",
+    "local_names": ["شيعة النحل"],
+    "family": "Verbenaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern mountains",
+    "habit": "Shrub",
+    "impact": "نبات شديد الغزو ويشكل شجيرات كثيفة تمنع نمو النباتات المحلية."
+  },
+  {
+    "name": "لوسينا",
+    "scientific_name": "Leucaena leucocephala (Lam.) de Wit",
+    "local_names": ["لوكينا", "سيسبان"],
+    "family": "Fabaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Central, eastern and southern reigons",
+    "habit": "Tree",
+    "impact": "ينتشر بسرعة ويشكل غابات كثيفة تمنع نمو النباتات المحلية."
+  },
+  {
+    "name": "Lythrum hyssopifolia L.",
+    "scientific_name": "Lythrum hyssopifolia L.",
+    "local_names": [],
+    "family": "Lythraceae",
+    "origin": "European",
+    "distribution_in_sa": "South western region",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الرطبة وقد يؤثر على النظم البيئية المائية."
+  },
+  {
+    "name": "ملوخية كاذبة",
+    "scientific_name": "Malvastrum coromandelianum (L.) Garcke",
+    "local_names": [],
+    "family": "Malvaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central region",
+    "habit": "P. Herb",
+    "impact": "حشيشة ضارة في المناطق الزراعية والمناطق المضطربة."
+  },
+  {
+    "name": "تبغ كاذب",
+    "scientific_name": "Nicotiana glauca Graham",
+    "local_names": ["تبغ ازرق"],
+    "family": "Solanaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Asir and Jazan Mountains",
+    "habit": "Shrub",
+    "impact": "نبات سام ينتشر بسرعة في المناطق المضطربة."
+  },
+  {
+    "name": "ست الحسن",
+    "scientific_name": "Operculina turpethum (L.) Silva Manso",
+    "local_names": ["مجد الصباح"],
+    "family": "Convolvulaceae",
+    "origin": "East Asian",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "P. Herb",
+    "impact": "نبات متسلق ينمو بكثافة ويخنق النباتات الأصلية."
+  },
+  {
+    "name": "تين شوكي",
+    "scientific_name": "Opuntia stricta (Haw.) Haw.",
+    "local_names": ["تين البلس"],
+    "family": "Cactaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بكثافة ويشكل عائقاً بسبب أشواكه، ويؤثر على حركة الحيوانات والرعي."
+  },
+  {
+    "name": "تين شوكي",
+    "scientific_name": "Opuntia ficus-indica (L.) Mill.",
+    "local_names": ["برشومي"],
+    "family": "Cactaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بكثافة ويشكل عائقاً بسبب أشواكه، ويؤثر على حركة الحيوانات والرعي."
+  },
+  {
+    "name": "بارثنيوم",
+    "scientific_name": "Parthenium hysterophorus L.",
+    "local_names": [],
+    "family": "Asteraceae",
+    "origin": "South American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "يسبب حساسية للإنسان والحيوان، وينتشر بسرعة في المناطق الزراعية."
+  },
+  {
+    "name": "أبو بيض",
+    "scientific_name": "Paspalum dilatatum Poir.",
+    "local_names": ["أبو خوصه"],
+    "family": "Poaceae",
+    "origin": "American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Annual",
+    "impact": "حشيشة ضارة في المناطق الزراعية والمراعي."
+  },
+  {
+    "name": "حرنكش",
+    "scientific_name": "Physalis peruviana L.",
+    "local_names": ["حبوة", "فيسالس"],
+    "family": "Solanaceae",
+    "origin": "American",
+    "distribution_in_sa": "Tihama, SW region",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الزراعية وقد يؤثر على المحاصيل."
+  },
+  {
+    "name": "حرنكش",
+    "scientific_name": "Physalis stapelioides (Regel) Bitter",
+    "local_names": ["حبوة", "فيسالس"],
+    "family": "Solanaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Tihama, SW region",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الزراعية وقد يؤثر على المحاصيل."
+  },
+  {
+    "name": "لسان النهر",
+    "scientific_name": "Potamogeton perfoliatus L.",
+    "local_names": ["عشب البركة المجعد"],
+    "family": "Potamogetonaceae",
+    "origin": "Tropical Regions",
+    "distribution_in_sa": "Central region",
+    "habit": "P. Herb",
+    "impact": "ينتشر في البيئات المائية ويؤثر على الحياة المائية."
+  },
+  {
+    "name": "المسكيت",
+    "scientific_name": "Prosopis juliflora (Sw.) DC.",
+    "local_names": ["برسوبس جوليفلورا"],
+    "family": "Fabaceae",
+    "origin": "South American",
+    "distribution_in_sa": "All regions in Saudi Arabia",
+    "habit": "Tree",
+    "impact": "شديد الغزو ويشكل غابات كثيفة تمنع نمو النباتات المحلية وتسبب مشاكل في الرعي."
+  },
+  {
+    "name": "شوك متدحرج",
+    "scientific_name": "Salsola kali L.",
+    "local_names": ["شوك روسي", "حاذ", "سالسولا كالي"],
+    "family": "Amaranthaceae",
+    "origin": "Northern and western Europe",
+    "distribution_in_sa": "South western region",
+    "habit": "Herb",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق الجافة وتسبب مشاكل في الزراعة."
+  },
+  {
+    "name": "سنا القهوة",
+    "scientific_name": "Senna occidentalis (L.) Link.",
+    "local_names": ["سنا غربي"],
+    "family": "Fabaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Central and western regions",
+    "habit": "Shrub",
+    "impact": "نبات سام وينتشر في المناطق الزراعية والمراعي."
+  },
+  {
+    "name": "سنا المنجل",
+    "scientific_name": "Senna obtusifolia (L.) H.S.Irwin & Barneby",
+    "local_names": [],
+    "family": "Fabaceae",
+    "origin": "South American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Shrub",
+    "impact": "ينتشر بسرعة في المناطق المضطربة وقد يؤثر على النباتات المحلية."
+  },
+  {
+    "name": "دلب",
+    "scientific_name": "Sesuvium portulacastrum (L.) L.",
+    "local_names": ["سيسيفيوم"],
+    "family": "Aizoaceae",
+    "origin": "Tropical regions",
+    "distribution_in_sa": "Eastern and central region",
+    "habit": "P. Herb",
+    "impact": "نبات ساحلي ينمو بكثافة وقد يغير من طبيعة الشواطئ."
+  },
+  {
+    "name": "رجلة البحر",
+    "scientific_name": "Sesuvium verrucosum Raf.",
+    "local_names": ["جويفة", "سيسيفيوم"],
+    "family": "Aizoaceae",
+    "origin": "American",
+    "distribution_in_sa": "Central and Western region",
+    "habit": "Herb",
+    "impact": "ينتشر في المناطق الملحية وقد يؤثر على النباتات المحلية."
+  },
+  {
+    "name": "مخملية دقيقة",
+    "scientific_name": "Tagetes minuta L.",
+    "local_names": [],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "P. Herb",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق المضطربة."
+  },
+  {
+    "name": "رقم",
+    "scientific_name": "Trianthema portulacastrum L.",
+    "local_names": ["لاني", "حصان"],
+    "family": "Aizoaceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق الزراعية."
+  },
+  {
+    "name": "ترايداكس",
+    "scientific_name": "Tridax procumbens (L.) L.",
+    "local_names": ["أزرار الجاكيت"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق الزراعية والحدائق."
+  },
+  {
+    "name": "دوار الشمس المتقزم",
+    "scientific_name": "Verbesina encelioides (Cav.) Benth. & Hook.f. ex A.Gray",
+    "local_names": ["نوارة الشمس", "عين الشمس"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "Herb",
+    "impact": "حشيشة ضارة تنتشر بسرعة في المناطق الزراعية والمراعي."
+  },
+  {
+    "name": "شبيط",
+    "scientific_name": "Xanthium spinosum L.",
+    "local_names": ["لزيق", "لصيق"],
+    "family": "Asteraceae",
+    "origin": "North American",
+    "distribution_in_sa": "Southwestern region",
+    "habit": "P. Herb",
+    "impact": "حشيشة ضارة ذات أشواك تسبب مشاكل في الرعي والزراعة."
+  }
+]
