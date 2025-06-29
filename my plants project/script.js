@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLoaded
 
+    console.log('DOM Content Loaded: script.js started.'); // تشخيص: بداية تحميل السكريبت
+
     // --- Global Elements and Navigation ---
     const goToMapBtn = document.getElementById('goToMapBtn');
     const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
@@ -13,28 +15,32 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
     // --- Data Fetching Functions ---
     async function fetchPlantsData() {
+        console.log('Fetching plants.json...'); // تشخيص
         try {
             const response = await fetch('plants.json');
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             plantsData = await response.json();
-            console.log('Plants data loaded:', plantsData);
+            console.log('Plants data loaded successfully:', plantsData); // تشخيص
         } catch (error) {
-            console.error('Could not fetch plants data:', error);
+            console.error('Could not fetch plants data:', error); // تشخيص: خطأ في جلب plants.json
         }
     }
 
     async function fetchProvincesInfo() {
+        console.log('Fetching provinces_info.json...'); // تشخيص
         try {
             const response = await fetch('provinces_info.json');
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             provincesInfoData = await response.json();
-            console.log('Provinces info loaded:', provincesInfoData);
+            console.log('Provinces info loaded successfully:', provincesInfoData); // تشخيص
         } catch (error) {
-            console.error('Could not fetch provinces info:', error);
+            console.error('Could not fetch provinces info:', error); // تشخيص: خطأ في جلب provinces_info.json
         }
     }
 
@@ -44,10 +50,11 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const plantsListSpinner = plantsListContainer ? plantsListContainer.querySelector('.spinner') : null;
         const plantsList = document.getElementById('plantsList');
 
+        console.log(`fetchSpecificPlantList called for: ${filePath}`); // تشخيص: هل تم استدعاء الدالة؟
+
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
         if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
 
-        console.log(`Attempting to fetch from: ${filePath}`); // تشخيص: هل المسار صحيح؟
         try {
             const response = await fetch(filePath);
             if (!response.ok) {
@@ -55,11 +62,11 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             currentPlantListData = await response.json();
-            console.log(`Loaded from ${filePath}:`, currentPlantListData);
+            console.log(`Data loaded for ${filePath}:`, currentPlantListData); // تشخيص: هل تم تحميل البيانات؟
             renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب مباشرة
         } catch (error) {
-            console.error(`Could not fetch plant list from ${filePath}:`, error);
-            if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}<br>يرجى التأكد من وجود ملف JSON في المسار الصحيح (${filePath})</li>`;
+            console.error(`ERROR: Could not fetch plant list from ${filePath}:`, error); // تشخيص: خطأ في جلب ملف JSON للقائمة
+            if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}<br>يرجى التأكد من وجود ملف JSON في المسار الصحيح (${filePath}) واسمه الصحيح.</li>`;
         } finally {
             if (plantsListSpinner) plantsListSpinner.style.display = 'none';
         }
@@ -68,18 +75,24 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     // دالة لعرض قائمة النباتات في الـ UL
     function renderPlantList(plantsToDisplay) {
         const plantsList = document.getElementById('plantsList');
-        if (!plantsList) return;
+        if (!plantsList) {
+            console.warn('plantsList element not found for rendering.'); // تشخيص: هل عنصر القائمة موجود؟
+            return;
+        }
+
+        console.log('renderPlantList called with data:', plantsToDisplay); // تشخيص: ما هي البيانات التي ستعرض؟
 
         plantsList.innerHTML = '';
         if (!plantsToDisplay || plantsToDisplay.length === 0) { // تأكد من أن plantsToDisplay ليست null/undefined
             plantsList.innerHTML = '<li class="text-gray-600 text-center">لا توجد نباتات لعرضها أو لا توجد نتائج مطابقة.</li>';
+            console.log('No plants to display or empty array.'); // تشخيص
             return;
         }
 
         plantsToDisplay.forEach(plant => {
             const listItem = document.createElement('li');
             listItem.className = 'bg-white/70 p-4 rounded-lg shadow-sm border border-gray-200';
-            let content = `<h4 class="text-xl font-bold text-gray-800">${plant.name}`;
+            let content = `<h4 class="text-xl font-bold text-gray-800">${plant.name || 'غير معروف'}`; // إضافة 'غير معروف' للسلامة
             if (plant.scientific_name) {
                 content += ` (<span class="italic text-sm text-gray-600">${plant.scientific_name}</span>)`;
             }
@@ -122,9 +135,19 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     // دالة لتصفية قائمة النباتات بناءً على البحث
     function filterPlantsList() {
         const plantSearchInput = document.getElementById('plantSearchInput');
-        if (!plantSearchInput) return;
+        if (!plantSearchInput) {
+            console.warn('plantSearchInput element not found for filtering.');
+            return;
+        }
 
         const searchTerm = plantSearchInput.value.trim().toLowerCase();
+        console.log('Filtering list with search term:', searchTerm);
+
+        if (!currentPlantListData || currentPlantListData.length === 0) {
+            console.warn('currentPlantListData is empty or null, cannot filter.');
+            renderPlantList([]);
+            return;
+        }
         
         const filteredPlants = currentPlantListData.filter(plant => {
             if (plant.name && plant.name.toLowerCase().includes(searchTerm)) return true;
@@ -143,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
             return false;
         });
+        console.log('Filtered plants:', filteredPlants);
         renderPlantList(filteredPlants);
     }
 
@@ -151,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     const slide1 = document.getElementById('slide-1');
 
     if (slide1) {
+        console.log('index.html page detected.');
         const slides = [slide1, document.getElementById('slide-2')];
         const backgrounds = [document.getElementById('bg-1'), document.getElementById('bg-2')];
         const startBtn = document.getElementById('startBtn');
@@ -166,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const explorerButtons = document.querySelectorAll('#slide-2 button[data-type]');
 
         function showSlide(index) {
+            console.log('Showing slide:', index);
             if (backgrounds[0] && backgrounds[1]) {
                 backgrounds.forEach((bg, i) => { bg.style.opacity = (i === index) ? '1' : '0'; });
             }
@@ -180,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         }
 
         async function handleSearch(plantName, type) {
+            console.log(`Handling Gemini search for: ${plantName}, type: ${type}`);
             if (geminiModal) geminiModal.style.display = 'flex';
             if (spinner) spinner.style.display = 'block';
             if (geminiTextContent) geminiTextContent.innerHTML = '';
@@ -249,11 +276,10 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             });
         }
         
-        // التحقق من hash في URL عند تحميل index.html
         if (window.location.hash === '#explorer') {
-            showSlide(1); // عرض slide-2 مباشرة إذا كان الهاش هو #explorer
+            showSlide(1);
         } else {
-            showSlide(0); // عرض slide-1 افتراضياً
+            showSlide(0);
         }
     }
     
@@ -261,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     const map = document.getElementById('saudi-map'); 
 
     if (map) {
+        console.log('map.html page detected.');
         fetchPlantsData();
         fetchProvincesInfo();
 
@@ -312,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         }
 
         async function handleGeminiProvinceSearch(provinceName) {
+            console.log(`Handling Gemini search for province: ${provinceName}`);
             if (provinceSpinner) provinceSpinner.style.display = 'block';
             if (provinceDetailsText) provinceDetailsText.innerHTML = '';
 
@@ -341,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             } catch (error) {
                 console.error("Gemini Province Search Error:", error);
                 if (provinceDetailsText) {
-                    provinceDetailsText.innerHTML = `<div class="text-center p-4 bg-red-100"><p class="font-bold">حدث خطأ أثناء جلب المعلومات</p><p class="text-sm mt-2">${error.message}</p></div>`;
+                    provinceDetailsText.innerHTML = `<div class="text-center p-4 bg-red-100"><p class="font-bold">حدث خطأ</p><p class="text-sm mt-2">${error.message}</p></div>`;
                 }
             } finally {
                 if (provinceSpinner) provinceSpinner.style.display = 'none';
@@ -350,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
 
         map.addEventListener('click', (event) => {
+            console.log('Map clicked.');
             resetProvinceHighlight();
 
             const provinceElement = event.target.closest('.province');
@@ -416,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
         if (searchProvinceBtn && provinceSearchInput) {
             searchProvinceBtn.addEventListener('click', () => {
+                console.log('Province search button clicked.');
                 const searchTerm = provinceSearchInput.value.trim().toLowerCase();
                 let foundProvinceId = null;
 
@@ -427,6 +457,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                 }
 
                 if (foundProvinceId) {
+                    console.log('Province found:', foundProvinceId);
                     highlightProvince(foundProvinceId);
                     const arabicName = provinceArabicNames[foundProvinceId];
                     if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
@@ -490,15 +521,15 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         });
     }
 
-    if (backToHomeBtn) { // هذا الزر موجود فقط في map.html
+    if (backToHomeBtn) {
         backToHomeBtn.addEventListener('click', () => {
             window.location.href = 'index.html';
         });
     }
 
-    if (backToMainFromListBtn) { // هذا الزر موجود فقط في صفحات القوائم (النادرة/الغازية)
+    if (backToMainFromListBtn) {
         backToMainFromListBtn.addEventListener('click', () => {
-            window.location.href = 'index.html#explorer'; // التغيير هنا: العودة إلى Slide 2 (مستكشف النباتات)
+            window.location.href = 'index.html#explorer';
         });
     }
 
@@ -508,22 +539,25 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     const searchPlantListBtn = document.getElementById('searchPlantListBtn');
 
     if (plantsListElement) {
+        console.log('Plant List page detected. Initializing...');
         const path = window.location.pathname;
         if (path.includes('rare-plants-list.html')) {
-            console.log('Loading Rare/Endangered Plants List');
+            console.log('Detected Rare/Endangered Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
         } else if (path.includes('invasive-plants-list.html')) {
-            console.log('Loading Invasive Plants List');
+            console.log('Detected Invasive Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/invasive_plants.json');
         }
 
-        // ربط زر البحث بفلتر القوائم عند النقر وعلى كل تغيير في حقل الإدخال
         if (plantSearchInputElement && searchPlantListBtn) {
+            console.log('Attaching search event listeners to list page.');
             searchPlantListBtn.addEventListener('click', filterPlantsList);
             plantSearchInputElement.addEventListener('input', filterPlantsList);
         } else if (plantSearchInputElement && !searchPlantListBtn) {
-             // لو المستخدم قرر إزالة زر البحث وأراد البحث فورياً عند الكتابة فقط
+            console.log('Search button not found, but attaching input listener for instant search.');
             plantSearchInputElement.addEventListener('input', filterPlantsList);
+        } else {
+            console.warn('Neither search input nor search button found for list page. No search functionality will be active.');
         }
     }
 
