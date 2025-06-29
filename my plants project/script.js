@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLoaded
 
-    console.log('DOM Content Loaded: script.js started.'); // تشخيص: بداية تحميل السكريبت
+    console.log('DOM Content Loaded: script.js started.');
 
     // --- Global Elements and Navigation ---
     const goToMapBtn = document.getElementById('goToMapBtn');
-    const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
-    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // هذا الزر فقط في rare/invasive pages
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn');
 
     // --- Global Data Storage ---
     let plantsData = [];
     let provincesInfoData = [];
-    let currentPlantListData = []; // لبيانات القوائم النادرة/الغازية
-    let highlightedProvince = null; // للمناطق في الخريطة
+    let currentPlantListData = [];
+    let highlightedProvince = null;
 
     // --- Data Fetching Functions ---
     async function fetchPlantsData() {
-        console.log('Fetching plants.json...'); // تشخيص
+        console.log('Fetching plants.json...');
         try {
             const response = await fetch('plants.json');
             if (!response.ok) {
@@ -23,25 +23,24 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             plantsData = await response.json();
-            console.log('Plants data loaded successfully:', plantsData); // تشخيص
+            console.log('Plants data loaded successfully:', plantsData);
         } catch (error) {
-            console.error('Could not fetch plants data:', error); // تشخيص: خطأ في جلب plants.json
+            console.error('Could not fetch plants data:', error);
         }
     }
 
     async function fetchProvincesInfo() {
-        console.log('Fetching provinces_info.json...'); // تشخيص
+        console.log('Fetching provinces_info.json...');
         try {
-            // ****** التعديل هنا: إضافة مسار المجلد 'documents/' ******
             const response = await fetch('documents/provinces_info.json'); 
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             provincesInfoData = await response.json();
-            console.log('Provinces info loaded successfully:', provincesInfoData); // تشخيص
+            console.log('Provinces info loaded successfully:', provincesInfoData);
         } catch (error) {
-            console.error('Could not fetch provinces info:', error); // تشخيص: خطأ في جلب provinces_info.json
+            console.error('Could not fetch provinces info:', error);
         }
     }
 
@@ -51,22 +50,22 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const plantsListSpinner = plantsListContainer ? plantsListContainer.querySelector('.spinner') : null;
         const plantsList = document.getElementById('plantsList');
 
-        console.log(`fetchSpecificPlantList called for: ${filePath}`); // تشخيص: هل تم استدعاء الدالة؟
+        console.log(`fetchSpecificPlantList called for: ${filePath}`);
 
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
-        if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
+        if (plantsList) plantsList.innerHTML = '';
 
         try {
             const response = await fetch(filePath);
             if (!response.ok) {
-                const errorText = await response.text(); // حاول قراءة نص الخطأ
+                const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             currentPlantListData = await response.json();
-            console.log(`Data loaded for ${filePath}:`, currentPlantListData); // تشخيص: هل تم تحميل البيانات؟
-            renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب مباشرة
+            console.log(`Data loaded for ${filePath}:`, currentPlantListData);
+            renderPlantList(currentPlantListData);
         } catch (error) {
-            console.error(`ERROR: Could not fetch plant list from ${filePath}:`, error); // تشخيص: خطأ في جلب ملف JSON للقائمة
+            console.error(`ERROR: Could not fetch plant list from ${filePath}:`, error);
             if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}<br>يرجى التأكد من وجود ملف JSON في المسار الصحيح (${filePath}) واسمه الصحيح.</li>`;
         } finally {
             if (plantsListSpinner) plantsListSpinner.style.display = 'none';
@@ -77,23 +76,23 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     function renderPlantList(plantsToDisplay) {
         const plantsList = document.getElementById('plantsList');
         if (!plantsList) {
-            console.warn('plantsList element not found for rendering.'); // تشخيص: هل عنصر القائمة موجود؟
+            console.warn('plantsList element not found for rendering.');
             return;
         }
 
-        console.log('renderPlantList called with data:', plantsToDisplay); // تشخيص: ما هي البيانات التي ستعرض؟
+        console.log('renderPlantList called with data:', plantsToDisplay);
 
         plantsList.innerHTML = '';
-        if (!plantsToDisplay || plantsToDisplay.length === 0) { // تأكد من أن plantsToDisplay ليست null/undefined
+        if (!plantsToDisplay || plantsToDisplay.length === 0) {
             plantsList.innerHTML = '<li class="text-gray-600 text-center">لا توجد نباتات لعرضها أو لا توجد نتائج مطابقة.</li>';
-            console.log('No plants to display or empty array.'); // تشخيص
+            console.log('No plants to display or empty array.');
             return;
         }
 
         plantsToDisplay.forEach(plant => {
             const listItem = document.createElement('li');
             listItem.className = 'bg-white/70 p-4 rounded-lg shadow-sm border border-gray-200';
-            let content = `<h4 class="text-xl font-bold text-gray-800">${plant.name || 'غير معروف'}`; // إضافة 'غير معروف' للسلامة
+            let content = `<h4 class="text-xl font-bold text-gray-800">${plant.name || 'غير معروف'}`;
             if (plant.scientific_name) {
                 content += ` (<span class="italic text-sm text-gray-600">${plant.scientific_name}</span>)`;
             }
@@ -542,6 +541,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     if (plantsListElement) {
         console.log('Plant List page detected. Initializing...');
         const path = window.location.pathname;
+        console.log('Current path for list page:', path); // هذا هو السطر الجديد المهم جداً
+
         if (path.includes('rare-plants-list.html')) {
             console.log('Detected Rare/Endangered Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
