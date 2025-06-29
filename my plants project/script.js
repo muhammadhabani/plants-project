@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLoaded
 
     // --- Global Elements and Navigation ---
+    // هذه الأزرار موجودة في صفحات مختلفة ولكنها تربط الصفحات ببعضها، لذلك يتم تعريفها في النطاق العام
     const goToMapBtn = document.getElementById('goToMapBtn');
     const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
     const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // هذا الزر فقط في rare/invasive pages
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const plantsList = document.getElementById('plantsList');
 
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
-        if (plantsList) plantsList.innerHTML = '';
+        if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
 
         try {
             const response = await fetch(filePath);
@@ -117,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         });
     }
 
-    // دالة لتصفية قائمة النباتات بناءً على البحث (الآن تُستدعى عند النقر على زر البحث)
+    // دالة لتصفية قائمة النباتات بناءً على البحث
     function filterPlantsList() {
         const plantSearchInput = document.getElementById('plantSearchInput');
         if (!plantSearchInput) return;
@@ -508,7 +509,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             fetchSpecificPlantList('documents/invasive_plants.json');
         }
 
-        if (plantSearchInputElement && searchPlantListBtn) { // الآن نربط زر البحث بالوظيفة
+        // ربط زر البحث بفلتر القوائم
+        if (plantSearchInputElement && searchPlantListBtn) {
             searchPlantListBtn.addEventListener('click', filterPlantsList); // تصفية عند النقر على الزر
             plantSearchInputElement.addEventListener('input', filterPlantsList); // تصفية فورية عند الكتابة
         }
