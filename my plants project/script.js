@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
     // --- Global Elements and Navigation ---
     const goToMapBtn = document.getElementById('goToMapBtn');
-    const backToHomeBtn = document.getElementById('backToHomeBtn');
-    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
+    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // هذا الزر فقط في rare/invasive pages
 
     // --- Global Data Storage ---
     let plantsData = [];
     let provincesInfoData = [];
-    let currentPlantListData = [];
-    let highlightedProvince = null;
+    let currentPlantListData = []; // لبيانات القوائم النادرة/الغازية
+    let highlightedProvince = null; // للمناطق في الخريطة
 
     // --- Data Fetching Functions ---
     async function fetchPlantsData() {
@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
     // دالة لجلب بيانات قوائم النباتات (النادرة/الغازية)
     async function fetchSpecificPlantList(filePath) {
-        const plantsListSpinner = document.getElementById('plantsListContainer') ? document.getElementById('plantsListContainer').querySelector('.spinner') : null;
+        const plantsListContainer = document.getElementById('plantsListContainer');
+        const plantsListSpinner = plantsListContainer ? plantsListContainer.querySelector('.spinner') : null;
         const plantsList = document.getElementById('plantsList');
 
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
@@ -53,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             }
             currentPlantListData = await response.json();
             console.log(`Loaded from ${filePath}:`, currentPlantListData);
-            renderPlantList(currentPlantListData);
+            renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب مباشرة
         } catch (error) {
             console.error(`Could not fetch plant list from ${filePath}:`, error);
             if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}</li>`;
@@ -116,17 +117,13 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         });
     }
 
-    // دالة لتصفية قائمة النباتات بناءً على البحث
+    // دالة لتصفية قائمة النباتات بناءً على البحث (الآن تُستدعى عند النقر على زر البحث)
     function filterPlantsList() {
         const plantSearchInput = document.getElementById('plantSearchInput');
         if (!plantSearchInput) return;
 
         const searchTerm = plantSearchInput.value.trim().toLowerCase();
-        if (!searchTerm) {
-            renderPlantList(currentPlantListData);
-            return;
-        }
-
+        
         const filteredPlants = currentPlantListData.filter(plant => {
             if (plant.name && plant.name.toLowerCase().includes(searchTerm)) return true;
             if (plant.scientific_name && plant.scientific_name.toLowerCase().includes(searchTerm)) return true;
@@ -410,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             });
         }
 
-        if (searchProvinceBtn && provinceSearchInput) { // بداية كتلة البحث في الخريطة
+        if (searchProvinceBtn && provinceSearchInput) {
             searchProvinceBtn.addEventListener('click', () => {
                 const searchTerm = provinceSearchInput.value.trim().toLowerCase();
                 let foundProvinceId = null;
@@ -474,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                     searchProvinceBtn.click();
                 }
             });
-        } // نهاية كتلة البحث في الخريطة
+        }
 
     } // نهاية كتلة map.html
 
@@ -486,22 +483,22 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         });
     }
 
-    if (backToHomeBtn) {
+    if (backToHomeBtn) { // هذا الزر موجود فقط في map.html
         backToHomeBtn.addEventListener('click', () => {
             window.location.href = 'index.html';
         });
     }
 
-    if (backToMainFromListBtn) {
+    if (backToMainFromListBtn) { // هذا الزر موجود فقط في صفحات القوائم (النادرة/الغازية)
         backToMainFromListBtn.addEventListener('click', () => {
             window.location.href = 'index.html';
         });
     }
 
     // --- Logic for Specific Plant Lists (Rare/Invasive) ---
-    // هذه الكتل ستُنفذ فقط إذا كان plantsList موجوداً في الصفحة الحالية
     const plantsListElement = document.getElementById('plantsList');
     const plantSearchInputElement = document.getElementById('plantSearchInput');
+    const searchPlantListBtn = document.getElementById('searchPlantListBtn'); // زر البحث في صفحات القوائم
 
     if (plantsListElement) { // بداية كتلة قوائم النباتات (نادرة/غازية)
         const path = window.location.pathname;
@@ -511,8 +508,9 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             fetchSpecificPlantList('documents/invasive_plants.json');
         }
 
-        if (plantSearchInputElement) {
-            plantSearchInputElement.addEventListener('input', filterPlantsList);
+        if (plantSearchInputElement && searchPlantListBtn) { // الآن نربط زر البحث بالوظيفة
+            searchPlantListBtn.addEventListener('click', filterPlantsList); // تصفية عند النقر على الزر
+            plantSearchInputElement.addEventListener('input', filterPlantsList); // تصفية فورية عند الكتابة
         }
     } // نهاية كتلة قوائم النباتات
 
