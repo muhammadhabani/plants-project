@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         console.log(`fetchSpecificPlantList called for: ${filePath}`);
 
         if (plantsListSpinner) plantsListSpinner.style.display = 'block';
-        if (plantsList) plantsList.innerHTML = '';
+        if (plantsList) plantsList.innerHTML = ''; // مسح القائمة الحالية
 
         try {
             const response = await fetch(filePath);
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             }
             currentPlantListData = await response.json();
             console.log(`Data loaded for ${filePath}:`, currentPlantListData);
-            renderPlantList(currentPlantListData);
+            renderPlantList(currentPlantListData); // عرض القائمة بعد الجلب مباشرة
         } catch (error) {
             console.error(`ERROR: Could not fetch plant list from ${filePath}:`, error);
             if (plantsList) plantsList.innerHTML = `<li class="text-red-500 text-center">حدث خطأ أثناء تحميل القائمة: ${error.message}<br>يرجى التأكد من وجود ملف JSON في المسار الصحيح (${filePath}) واسمه الصحيح.</li>`;
@@ -541,14 +541,20 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     if (plantsListElement) {
         console.log('Plant List page detected. Initializing...');
         const path = window.location.pathname;
-        console.log('Current path for list page:', path); // هذا هو السطر الجديد المهم جداً
+        console.log('Current path for list page:', path);
+        
+        // تعديل الشرط لجعل التحقق أكثر مرونة ودقة
+        const filename = path.split('/').pop(); // استخراج اسم الملف فقط (مثلاً rare-plants-list.html)
+        console.log('Extracted filename for list page:', filename); // تشخيص: ما هو اسم الملف المستخرج؟
 
-        if (path.includes('rare-plants-list.html')) {
+        if (filename === 'rare-plants-list.html') { // استخدام مقارنة مباشرة
             console.log('Detected Rare/Endangered Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
-        } else if (path.includes('invasive-plants-list.html')) {
+        } else if (filename === 'invasive-plants-list.html') { // استخدام مقارنة مباشرة
             console.log('Detected Invasive Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/invasive_plants.json');
+        } else {
+            console.warn('Could not identify specific list page based on filename.'); // تشخيص: إذا لم يتطابق أي مسار
         }
 
         if (plantSearchInputElement && searchPlantListBtn) {
