@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
     // --- Global Elements and Navigation ---
     const goToMapBtn = document.getElementById('goToMapBtn');
-    const backToHomeBtn = document.getElementById('backToHomeBtn'); // هذا الزر فقط في map.html
-    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn'); // هذا الزر فقط في rare/invasive pages
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const backToMainFromListBtn = document.getElementById('backToMainFromListBtn');
 
     // --- Global Data Storage ---
     let plantsData = [];
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
     }
 
     async function fetchProvincesInfo() {
-        console.log('Fetching documents/provinces_info.json...');
+        console.log('Fetching provinces_info.json...');
         try {
             const response = await fetch('documents/provinces_info.json'); 
             if (!response.ok) {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         try {
             const response = await fetch(filePath);
             if (!response.ok) {
-                const errorText = await response.text();
+                const errorText = await response.text(); // حاول قراءة نص الخطأ
                 throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
             currentPlantListData = await response.json();
@@ -196,15 +196,6 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                 backgrounds.forEach((bg, i) => { bg.style.opacity = (i === index) ? '1' : '0'; });
             }
             slides.forEach((slide, i) => { slide.style.display = (i === index) ? 'flex' : 'none'; });
-
-            // تحديث حالة الأزرار بناءً على الشريحة النشطة (إظهار/إخفاء)
-            if (index === 0) { // Slide 1 (Home)
-                if (startBtn) startBtn.style.display = 'block';
-                if (backBtn) backBtn.style.display = 'none';
-            } else if (index === 1) { // Slide 2 (Explorer)
-                if (startBtn) startBtn.style.display = 'none';
-                if (backBtn) backBtn.style.display = 'block'; // زر العودة للبداية في slide-2
-            }
         }
 
         if (startBtn) {
@@ -265,11 +256,11 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
         explorerButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const plantName = plantNameInput ? plantNameInput.value.trim() : '';
+                const plantName = plantNameInput.value.trim();
                 if (plantName) {
                     handleSearch(plantName, button.dataset.type);
                 } else {
-                    alert('الرجاء إدخال اسم النبات أولاً.'); // يمكن استبدالها برسالة أفضل في الـ UI
+                    alert('الرجاء إدخال اسم النبات أولاً.');
                 }
             });
         });
@@ -285,11 +276,10 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
             });
         }
         
-        // التحقق من hash في URL عند تحميل index.html وتحديد الشريحة الأولية
         if (window.location.hash === '#explorer') {
-            showSlide(1); // عرض slide-2 مباشرة إذا كان الهاش هو #explorer
+            showSlide(1);
         } else {
-            showSlide(0); // عرض slide-1 افتراضياً
+            showSlide(0);
         }
     }
     
@@ -330,13 +320,9 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
         function resetProvinceHighlight() {
             if (highlightedProvince) {
-                // إعادة اللون الأساسي من CSS (إذا كان يعمل) أو من attribute
-                const targetElement = document.getElementById(highlightedProvince);
-                if (targetElement) {
-                    targetElement.style.fill = '#e3d5b8'; // اللون الرملي الأساسي
-                    targetElement.style.stroke = '#6a4f3e'; // الحدود الأساسية
-                    targetElement.style.transform = ''; // إزالة التحريك
-                }
+                highlightedProvince.style.fill = '';
+                highlightedProvince.style.stroke = '';
+                highlightedProvince.style.transform = '';
                 highlightedProvince = null;
             }
         }
@@ -348,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
                 targetProvince.style.fill = '#FFD700'; // لون أصفر ذهبي للتمييز
                 targetProvince.style.stroke = '#FF4500'; // حدود حمراء برتقالية
                 targetProvince.style.transform = 'scale(1.02)'; // تكبير بسيط
-                highlightedProvince = provinceId; // تخزين الـ ID لتسهيل إزالة التمييز
+                highlightedProvince = targetProvince;
             }
         }
 
@@ -393,15 +379,14 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
 
         map.addEventListener('click', (event) => {
             console.log('Map clicked.');
-            // إزالة التمييز من المنطقة المظللة سابقاً (قبل النقر على منطقة جديدة)
-            resetProvinceHighlight(); 
+            resetProvinceHighlight();
 
             const provinceElement = event.target.closest('.province');
             if (provinceElement) {
                 const provinceId = provinceElement.id;
                 const arabicName = provinceArabicNames[provinceId] || 'منطقة غير معروفة';
                 
-                highlightProvince(provinceId); // تمييز المنطقة التي تم النقر عليها
+                highlightProvince(provinceId);
                 
                 if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
                 
@@ -446,14 +431,14 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         if (closeProvinceModalBtn) {
             closeProvinceModalBtn.addEventListener('click', () => { 
                 if (provinceInfoModal) provinceInfoModal.style.display = 'none';
-                resetProvinceHighlight(); // إزالة التمييز عند إغلاق الـ Modal
+                resetProvinceHighlight();
             });
         }
         if (provinceInfoModal) {
             provinceInfoModal.addEventListener('click', (event) => {
                 if (event.target === provinceInfoModal) {
                     provinceInfoModal.style.display = 'none';
-                    resetProvinceHighlight(); // إزالة التمييز عند النقر خارج الـ Modal
+                    resetProvinceHighlight();
                 }
             });
         }
@@ -558,9 +543,10 @@ document.addEventListener('DOMContentLoaded', () => { // بداية DOMContentLo
         const path = window.location.pathname;
         console.log('Current path for list page:', path);
         
-        const filename = path.split('/').pop();
+        const filename = path.split('/').pop(); // استخراج اسم الملف فقط (مثلاً rare-plants-list)
         console.log('Extracted filename for list page:', filename);
 
+        // التعديل هنا: مقارنة مباشرة باسم الملف بدون الامتداد
         if (filename === 'rare-plants-list') { 
             console.log('Detected Rare/Endangered Plants List page. Fetching data...');
             fetchSpecificPlantList('documents/rare_endangered_plants.json');
