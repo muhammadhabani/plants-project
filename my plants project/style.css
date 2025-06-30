@@ -1,0 +1,571 @@
+body {
+    font-family: 'Readex Pro', sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Prevent scrollbars on body */
+}
+
+.page-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    z-index: -1;
+}
+
+#bg1\.webp {
+    background-image: url('bg1.webp');
+}
+
+#bg2\.webp {
+    background-image: url('bg2.webp');
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+#slide-1 {
+    transform: translateX(0%);
+    opacity: 1;
+    z-index: 2;
+}
+
+#slide-2 {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.slide.active {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.slide.inactive-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.slide.inactive-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Spinner for Gemini Response */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #6a4f3e;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}                backgrounds.forEach((bg, i) => { bg.style.opacity = (i === index) ? '1' : '0'; });
+            }
+            slides.forEach((slide, i) => { slide.style.display = (i === index) ? 'flex' : 'none'; });
+        }
+
+        if (startBtn) {
+            startBtn.addEventListener('click', () => showSlide(1));
+        }
+        if (backBtn) {
+            backBtn.addEventListener('click', () => showSlide(0));
+        }
+
+        async function handleSearch(plantName, type) {
+            console.log(`Handling Gemini search for: ${plantName}, type: ${type}`); // تشخيص
+            if (geminiModal) geminiModal.style.display = 'flex';
+            if (spinner) spinner.style.display = 'block';
+            if (geminiTextContent) geminiTextContent.innerHTML = '';
+
+            const titles = { info: "معلومات عامة", uses: "استخدامات تقليدية", names: "أسماء شعبية", scientific: "الاسم العلمي" };
+
+            const prompts = {
+                info: `بصفتك خبير نباتات متخصص في الغطاء النباتي للمملكة العربية السعودية، قدم وصفاً تعريفياً موجزاً لنبات '${plantName}'. ركز على شكله المميز، وبيئته الطبيعية التي ينمو فيها داخل المملكة. ابدأ الإجابة مباشرة.`,
+                uses: `بصفتك باحث في التراث النباتي للمملكة، اذكر أبرز الاستخدامات التقليدية لنبات '${plantName}' في الثقافة السعودية، سواء كانت طبية أو غذائية. قدم الإجابة في نقاط واضحة. ابدأ الإجابة مباشرة دون تمهيد.`,
+                names: `كمختص في اللهجات والنباتات المحلية، ما هي الأسماء الشعبية الأخرى الشائعة لنبات '${plantName}' في مختلف مناطق المملكة؟ ابدأ الإجابة مباشرة.`,
+                scientific: `بصفتك عالم نباتات، ما هو الاسم العلمي الدقيق (Scientific Name) لنبات '${plantName}'؟ واذكر أيضاً اسم العائلة النباتية (Family) التي ينتمي إليها. أجب مباشرة.`
+            };
+
+            if (modalTitle) modalTitle.textContent = `${titles[type]} عن ${plantName}`;
+            const prompt = prompts[type];
+
+            try {
+                const response = await fetch('/.netlify/functions/fetch-gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (!result.candidates || result.candidates.length === 0) {
+                    throw new Error("No valid response from Gemini.");
+                }
+                
+                if (geminiTextContent) {
+                    geminiTextContent.innerHTML = result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                }
+
+            } catch (error) {
+                console.error("Search Error:", error);
+                if (geminiTextContent) {
+                    geminiTextContent.innerHTML = `<div class="text-center p-4 bg-red-100"><p class="font-bold">حدث خطأ</p><p class="text-sm mt-2">${error.message}</p></div>`;
+                }
+            } finally {
+                if (spinner) spinner.style.display = 'none';
+            }
+        }
+
+        explorerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const plantName = plantNameInput.value.trim();
+                if (plantName) {
+                    handleSearch(plantName, button.dataset.type);
+                } else {
+                    alert('الرجاء إدخال اسم النبات أولاً.');
+                }
+            });
+        });
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => { if (geminiModal) geminiModal.style.display = 'none'; });
+        }
+        if (geminiModal) {
+            geminiModal.addEventListener('click', (event) => {
+                if (event.target === geminiModal) {
+                    geminiModal.style.display = 'none';
+                }
+            });
+        }
+        
+        if (window.location.hash === '#explorer') {
+            showSlide(1);
+        } else {
+            showSlide(0);
+        }
+    }
+    
+    // --- Logic specific to map.html (Map Page) ---
+    const map = document.getElementById('saudi-map'); 
+
+    if (map) {
+        console.log('map.html page detected.'); // تشخيص
+        fetchPlantsData();
+        fetchProvincesInfo();
+
+        const provinceInfoModal = document.getElementById('provinceInfoModal');
+        const closeProvinceModalBtn = document.getElementById('closeProvinceModalBtn');
+        const provinceModalTitle = document.getElementById('provinceModalTitle');
+        const provinceDetails = document.getElementById('provinceDetails');
+        const provinceDetailsText = document.getElementById('provinceDetailsText');
+        const provinceSpinner = provinceInfoModal ? provinceInfoModal.querySelector('.spinner') : null;
+
+        const provinceSearchInput = document.getElementById('provinceSearchInput');
+        const searchProvinceBtn = document.getElementById('searchProvinceBtn');
+
+
+        const provinceArabicNames = {
+            'albahah-province': 'منطقة الباحة',
+            'eastern-province': 'المنطقة الشرقية',
+            'najran-province': 'منطقة نجران',
+            'riyadh-province': 'منطقة الرياض',
+            'northern-borders_province': 'منطقة الحدود الشمالية',
+            'alqassim-province': 'منطقة القصيم',
+            'aseer-province': 'منطقة عسير',
+            'jazan-province': 'منطقة جازان',
+            'almadinah-province': 'منطقة المدينة المنورة',
+            'hail-province': 'منطقة حائل',
+            'tabuk-province': 'منطقة تبوك',
+            'makkah-province': 'منطقة مكة المكرمة',
+            'aljowf-province': 'منطقة الجوف'
+        };
+
+        function resetProvinceHighlight() {
+            if (highlightedProvince) {
+                highlightedProvince.style.fill = '';
+                highlightedProvince.style.stroke = '';
+                highlightedProvince.style.transform = '';
+                highlightedProvince = null;
+            }
+        }
+
+        function highlightProvince(provinceId) {
+            resetProvinceHighlight();
+            const targetProvince = document.getElementById(provinceId);
+            if (targetProvince) {
+                targetProvince.style.fill = '#FFD700'; // لون أصفر ذهبي للتمييز
+                targetProvince.style.stroke = '#FF4500'; // حدود حمراء برتقالية
+                targetProvince.style.transform = 'scale(1.02)'; // تكبير بسيط
+                highlightedProvince = targetProvince;
+            }
+        }
+
+        async function handleGeminiProvinceSearch(provinceName) {
+            console.log(`Handling Gemini search for province: ${provinceName}`); // تشخيص
+            if (provinceSpinner) provinceSpinner.style.display = 'block';
+            if (provinceDetailsText) provinceDetailsText.innerHTML = '';
+
+            const prompt = `بصفتك خبير نباتات متخصص في الغطاء النباتي للمملكة العربية السعودية، اذكر أبرز أنواع النباتات الشائعة أو المميزة التي تنمو في منطقة ${provinceName}. ابدأ الإجابة مباشرة في نقاط واضحة أو فقرة موجزة دون تمهيد.`;
+
+            try {
+                const response = await fetch('/.netlify/functions/fetch-gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (!result.candidates || result.candidates.length === 0) {
+                    throw new Error("No valid response from Gemini.");
+                }
+                
+                if (provinceDetailsText) {
+                    provinceDetailsText.innerHTML = result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                }
+
+            } catch (error) {
+                console.error("Gemini Province Search Error:", error);
+                if (provinceDetailsText) {
+                    provinceDetailsText.innerHTML = `<div class="text-center p-4 bg-red-100"><p class="font-bold">حدث خطأ أثناء جلب المعلومات</p><p class="text-sm mt-2">${error.message}</p></div>`;
+                }
+            } finally {
+                if (provinceSpinner) provinceSpinner.style.display = 'none';
+            }
+        }
+
+
+        map.addEventListener('click', (event) => {
+            console.log('Map clicked.'); // تشخيص
+            resetProvinceHighlight();
+
+            const provinceElement = event.target.closest('.province');
+            if (provinceElement) {
+                const provinceId = provinceElement.id;
+                const arabicName = provinceArabicNames[provinceId] || 'منطقة غير معروفة';
+                
+                highlightProvince(provinceId);
+                
+                if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
+                
+                if (provinceDetails) {
+                    if (provinceSpinner) provinceSpinner.style.display = 'none';
+                    if (provinceDetailsText) provinceDetailsText.innerHTML = '';
+
+                    const currentProvinceInfo = provincesInfoData.find(info => info.id === provinceId);
+                    if (currentProvinceInfo && currentProvinceInfo.description) {
+                        provinceDetailsText.innerHTML += `
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">${currentProvinceInfo.arabic_name}</h4>
+                            <p class="mb-4">${currentProvinceInfo.description}</p>
+                            <hr class="border-gray-300 my-4">
+                        `;
+                    } else {
+                        provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد معلومات وصفية محلية عن هذه المنطقة.</p>`;
+                    }
+
+                    const plantsInProvince = plantsData.filter(plant => plant.province === provinceId);
+                    if (plantsInProvince.length > 0) {
+                        provinceDetailsText.innerHTML += `<h4 class="text-xl font-bold text-gray-800 mb-2">النباتات المتوفرة محلياً:</h4>`;
+                        let plantsHtml = '<ul class="list-disc list-inside space-y-2">';
+                        plantsInProvince.forEach(plant => {
+                            plantsHtml += `<li class="text-gray-700">
+                                                <span class="font-bold text-green-700">${plant.name}</span> 
+                                                (<span class="italic text-sm">${plant.scientific_name}</span>)
+                                                <p class="text-xs text-gray-500 mt-1">${plant.info.substring(0, 100)}...</p>
+                                            </li>`;
+                        });
+                        plantsHtml += '</ul>';
+                        provinceDetailsText.innerHTML += plantsHtml;
+                    } else {
+                        provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد بيانات نباتات متوفرة محلياً لهذه المنطقة.</p>`;
+                        provinceDetailsText.innerHTML += `<p class="text-gray-600">جاري البحث عن نباتات شائعة عبر الذكاء الاصطناعي...</p>`;
+                        handleGeminiProvinceSearch(arabicName);
+                    }
+                    if (provinceInfoModal) provinceInfoModal.style.display = 'flex';
+                }
+            }
+        });
+
+        if (closeProvinceModalBtn) {
+            closeProvinceModalBtn.addEventListener('click', () => { 
+                if (provinceInfoModal) provinceInfoModal.style.display = 'none';
+                resetProvinceHighlight();
+            });
+        }
+        if (provinceInfoModal) {
+            provinceInfoModal.addEventListener('click', (event) => {
+                if (event.target === provinceInfoModal) {
+                    provinceInfoModal.style.display = 'none';
+                    resetProvinceHighlight();
+                }
+            });
+        }
+
+        if (searchProvinceBtn && provinceSearchInput) {
+            searchProvinceBtn.addEventListener('click', () => {
+                console.log('Province search button clicked.'); // تشخيص
+                const searchTerm = provinceSearchInput.value.trim().toLowerCase();
+                let foundProvinceId = null;
+
+                for (const id in provinceArabicNames) {
+                    if (provinceArabicNames[id].toLowerCase().includes(searchTerm) || id.toLowerCase().includes(searchTerm)) {
+                        foundProvinceId = id;
+                        break;
+                    }
+                }
+
+                if (foundProvinceId) {
+                    console.log('Province found:', foundProvinceId); // تشخيص
+                    highlightProvince(foundProvinceId);
+                    const arabicName = provinceArabicNames[foundProvinceId];
+                    if (provinceModalTitle) provinceModalTitle.textContent = `معلومات عن ${arabicName}`;
+                    
+                    if (provinceDetails) {
+                        if (provinceSpinner) provinceSpinner.style.display = 'none';
+                        if (provinceDetailsText) provinceDetailsText.innerHTML = '';
+
+                        const currentProvinceInfo = provincesInfoData.find(info => info.id === foundProvinceId);
+                        if (currentProvinceInfo && currentProvinceInfo.description) {
+                            provinceDetailsText.innerHTML += `
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">${currentProvinceInfo.arabic_name}</h4>
+                                <p class="mb-4">${currentProvinceInfo.description}</p>
+                                <hr class="border-gray-300 my-4">
+                            `;
+                        } else {
+                            provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد معلومات وصفية محلية عن هذه المنطقة.</p>`;
+                        }
+
+                        const plantsInProvince = plantsData.filter(plant => plant.province === foundProvinceId);
+                        if (plantsInProvince.length > 0) {
+                            provinceDetailsText.innerHTML += `<h4 class="text-xl font-bold text-gray-800 mb-2">النباتات المتوفرة محلياً:</h4>`;
+                            let plantsHtml = '<ul class="list-disc list-inside space-y-2">';
+                            plantsInProvince.forEach(plant => {
+                                plantsHtml += `<li class="text-gray-700">
+                                                    <span class="font-bold text-green-700">${plant.name}</span> 
+                                                    (<span class="italic text-sm">${plant.scientific_name}</span>)
+                                                    <p class="text-xs text-gray-500 mt-1">${plant.info.substring(0, 100)}...</p>
+                                                </li>`;
+                            });
+                            plantsHtml += '</ul>';
+                            provinceDetailsText.innerHTML += plantsHtml;
+                        } else {
+                            provinceDetailsText.innerHTML += `<p class="mb-4 text-gray-600">لا توجد بيانات نباتات متوفرة محلياً لهذه المنطقة.</p>`;
+                            provinceDetailsText.innerHTML += `<p class="text-gray-600">جاري البحث عن نباتات شائعة عبر الذكاء الاصطناعي...</p>`;
+                            handleGeminiProvinceSearch(arabicName);
+                        }
+                        if (provinceInfoModal) provinceInfoModal.style.display = 'flex';
+                    }
+
+                } else {
+                    alert('لم يتم العثور على منطقة بهذا الاسم. يرجى التأكد من الإملاء.');
+                    resetProvinceHighlight();
+                }
+            });
+
+            provinceSearchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    searchProvinceBtn.click();
+                }
+            });
+        }
+
+    } // نهاية كتلة map.html
+
+
+    // --- General Navigation between index.html and other pages ---
+    if (goToMapBtn) {
+        goToMapBtn.addEventListener('click', () => {
+            window.location.href = 'map.html';
+        });
+    }
+
+    if (backToHomeBtn) {
+        backToHomeBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
+
+    if (backToMainFromListBtn) {
+        backToMainFromListBtn.addEventListener('click', () => {
+            window.location.href = 'index.html#explorer';
+        });
+    }
+
+    // --- Logic for Specific Plant Lists (Rare/Invasive) ---
+    const plantsListElement = document.getElementById('plantsList');
+    const plantSearchInputElement = document.getElementById('plantSearchInput');
+    const searchPlantListBtn = document.getElementById('searchPlantListBtn');
+
+    if (plantsListElement) { // بداية كتلة قوائم النباتات (نادرة/غازية)
+        console.log('Plant List page detected. Initializing...'); // تشخيص
+        const path = window.location.pathname;
+        if (path.includes('rare-plants-list.html')) {
+            console.log('Detected Rare/Endangered Plants List page.');
+            fetchSpecificPlantList('documents/rare_endangered_plants.json');
+        } else if (path.includes('invasive-plants-list.html')) {
+            console.log('Detected Invasive Plants List page.');
+            fetchSpecificPlantList('documents/invasive_plants.json');
+        }
+
+        if (plantSearchInputElement && searchPlantListBtn) {
+            console.log('Attaching search event listeners to list page.'); // تشخيص
+            searchPlantListBtn.addEventListener('click', filterPlantsList);
+            plantSearchInputElement.addEventListener('input', filterPlantsList);
+        } else {
+            console.warn('Search input or button not found on list page, or listeners not attached.'); // تشخيص: إذا لم يتم العثور على أحدهما
+        }
+    }
+
+
+}); // نهاية DOMContentLoaded
+
+/*
+NOTE: The following CSS block was provided for a JavaScript file (script.js).
+This CSS should typically be placed in a dedicated .css file (e.g., style.css).
+It has been commented out here to prevent syntax errors and to indicate its intended location.
+
+body {
+    font-family: 'Readex Pro', sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Prevent scrollbars on body */
+}
+
+.page-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    z-index: -1;
+}
+
+#bg1\.webp {
+    background-image: url('bg1.webp');
+}
+
+#bg2\.webp {
+    background-image: url('bg2.webp');
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+#slide-1 {
+    transform: translateX(0%);
+    opacity: 1;
+    z-index: 2;
+}
+
+#slide-2 {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.slide.active {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.slide.inactive-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.slide.inactive-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Spinner for Gemini Response */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #6a4f3e;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+*/
