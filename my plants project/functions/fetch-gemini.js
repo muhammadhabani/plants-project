@@ -7,7 +7,8 @@ exports.handler = async function(event) {
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) throw new Error("API key is not configured.");
 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        // 🟢 هذا هو السطر الذي يجب تعديله: تغيير اسم النموذج
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
         
         // --- *** UPDATED PAYLOAD with temperature setting *** ---
         // This makes the AI response more consistent and factual.
